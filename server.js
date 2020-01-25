@@ -19,10 +19,11 @@ app.use('/api/items',items)
 //BodyParser Middleware
 
 
+const db = require('./config/db');
 
-const mongoURI=process.env.MONGODB_URI||'mongodb://localhost/shopping-list'
+//const mongoURI=process.env.MONGODB_URI||'mongodb://localhost/shopping-list'
 
-mongoose.connect(mongoURI).then(()=>console.log('MongoDB connected'))
+mongoose.connect(db,{useNewUrlParser: true}).then(()=>console.log('MongoDB connected'))
 .catch(error=>console.log(error))
 
 if (process.env.NODE_ENV === 'production') {

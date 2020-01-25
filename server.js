@@ -3,14 +3,12 @@ const app=express()
 const mongoose=require('mongoose')
 const bodyParser=require('body-parser')
 const path=require('path')
-const config = require('config');
 
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const db = config.get('mongoURI');
 
 
 const items=require('./routes/api/items')
@@ -24,13 +22,22 @@ app.use('/api/items',items)
 //BodyParser Middleware
 
 
-//const db = require('./config/db');
+const db = require('./config/db');
 
 //const mongoURI=process.env.MONGODB_URI||'mongodb://localhost/shopping-list'
 
-mongoose.connect(db,{useNewUrlParser: true,  useCreateIndex: true}).then(()=>console.log('MongoDB connected'))
-.catch(error=>console.log(error))
+// mongoose.connect(db,{useNewUrlParser: true,  useCreateIndex: true}).then(()=>console.log('MongoDB connected'))
+// .catch(error=>console.log(error))
 
+// Connect to Mongo
+mongoose
+  .connect(db, { 
+    useNewUrlParser: true,
+    useCreateIndex: true
+  }) // Adding new mongo url parser
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
+  
 if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));

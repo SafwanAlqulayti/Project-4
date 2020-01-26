@@ -1,7 +1,7 @@
 'use strict';
 
 // Creating a base name for the MongoDB
-const mongooseBaseName = 'blogy'
+const mongooseBaseName = 'shopping-List'
 
 // Create the MongoDB URI for Development and Test
 const database = {

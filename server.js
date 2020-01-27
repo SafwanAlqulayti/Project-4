@@ -43,15 +43,19 @@ app.use('/api/items',items)
 //   .catch(err => console.log(err));
 
 
-const MongoClient = require('mongodb').MongoClient;
-//const uri = "mongodb://localhost/shopping-shopping";
-const client = new MongoClient(db, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+// const MongoClient = require('mongodb').MongoClient;
+// //const uri = "mongodb://localhost/shopping-shopping";
+// const client = new MongoClient(db, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
 
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
+const conn = mongoose.connection;
+mongoose.connection.once('open', () => { console.log('MongoDB Connected'); });
+mongoose.connection.on('error', (err) => { console.log('MongoDB connection error: ', err); }); 
 
 if (process.env.NODE_ENV === 'production') {
     // Set static folder

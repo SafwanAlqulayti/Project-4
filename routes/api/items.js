@@ -1,6 +1,7 @@
 const express=require('express')
 
 const router=express.Router()
+const auth=require('../../middleware/auth')
 
 const Item=require('../../models/item')
 
@@ -16,7 +17,12 @@ router.get('/', (req,res)=>{
 })
 
 
-router.post('/', (req,res)=>{
+// @route POST api/items/:id
+// @desc POST an item
+// @access  private
+
+
+router.post('/', auth,(req,res)=>{
     console.log(req.body.name)
     Item.create(req.body)
     .then((newItem)=>{res.status(201).json({new_item: newItem})})
@@ -24,14 +30,22 @@ router.post('/', (req,res)=>{
 })
 
 
-router.delete('/:id', (req,res)=>{
+// @route DELETE api/items/:id
+// @desc DELETE an item
+// @access  private
+
+router.delete('/:id', auth, (req,res)=>{
     console.log(req.body.name)
     Item.findByIdAndDelete(req.params.id)
     .then((deletedItem)=>{res.status(201).json({deleted_Item: deletedItem})})
     .catch(error=>res.status(500).json({error:error}))
 })
 
-router.patch('/:id', function(req, res) {
+// @route UPDATE api/items/:id
+// @desc UPDATE an item
+// @access  private
+
+router.patch('/:id', auth, function(req, res) {
     Item.findById(req.params.id)
       .then(function(uitem) {
         if(uitem) {

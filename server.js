@@ -1,22 +1,31 @@
 const express=require('express')
 const app=express()
 const mongoose=require('mongoose')
-const bodyParser=require('body-parser')
 const path=require('path')
-//const config = require('config');
+const config = require('config');
 
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 
 
 
 const items=require('./routes/api/items')
+const users=require('./routes/api/users')
+const auth=require('./routes/api/auth')
+
+
 
 
 //Use Routes
 app.use('/api/items',items)
+app.use('/api/users',users)
+app.use('/api/auth',auth)
+
+//another way to do that:
+//app.use('/api/users',require('./routes/api/users'))
+//app.use('/api/items',require('./routes/api/items'))
 
 
 
@@ -52,7 +61,11 @@ app.use('/api/items',items)
 //   client.close();
 // });
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
+
+//useUnifiedTopology gets rid of "DeprecationWarning"
+
+const connectTo=process.env.MONGODB_URI||db
+mongoose.connect(connectTo, {useNewUrlParser: true,useUnifiedTopology: true});
 const conn = mongoose.connection;
 mongoose.connection.once('open', () => { console.log('MongoDB Connected'); });
 mongoose.connection.on('error', (err) => { console.log('MongoDB connection error: ', err); }); 

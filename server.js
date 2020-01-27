@@ -24,12 +24,12 @@ app.use('/api/items',items)
 
 
 ///const db = require('./config/db');
-const db='mongodb+srv://SarahMA:035212212Ss.$@cluster0-v7ewu.mongodb.net/test?retryWrites=true&w=majority'
+ const db='mongodb+srv://SarahMA:035212212Ss.$@cluster0-v7ewu.mongodb.net/test?retryWrites=true&w=majority'
 
-// const mongoURI=process.env.MONGODB_URI||'mongodb://SarahMA:035212212sS.$@cluster0-v7ewu.mongodb.net/shopping'
+// // const mongoURI=process.env.MONGODB_URI||'mongodb://SarahMA:035212212sS.$@cluster0-v7ewu.mongodb.net/shopping'
 
- mongoose.connect(db,{useNewUrlParser: true,  useCreateIndex: true}).then(()=>console.log('MongoDB connected'))
- .catch(error=>console.log(error))
+//  mongoose.connect(db,{useNewUrlParser: true,  useCreateIndex: true}).then(()=>console.log('MongoDB connected'))
+//  .catch(error=>console.log(error))
 
 // //const db = config.get('mongoURI');
 
@@ -44,8 +44,8 @@ const db='mongodb+srv://SarahMA:035212212Ss.$@cluster0-v7ewu.mongodb.net/test?re
 
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb://localhost/shopping-shopping";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+//const uri = "mongodb://localhost/shopping-shopping";
+const client = new MongoClient(db, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
   // perform actions on the collection object

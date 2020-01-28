@@ -8,11 +8,11 @@ const bookSchema = new Schema({
 
     author: { type: String, isRequired: true },
 
-    ISBN: { type: Number, isRequired: true, unique: true, min: 10, max: 13 },
+    ISBN: { type: Number, isRequired: true, unique: true, min: 1000000000000, max: 9999999999999 },
 
     description: { type: String, isRequired: true },
 
-    publish_date: { type: Date, isRequired: true },
+    publish_year: { type: Number, isRequired: true, min: 1000, max:(new Date().getFullYear())},
 
     language: { type: String, isRequired: true },
 

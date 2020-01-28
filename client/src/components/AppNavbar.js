@@ -15,6 +15,16 @@ import LoginModal from './auth/LoginModal'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+  } from 'react-router-dom';
+
+  import ShoppingList from './ShoppingList'
+
+
+
 class AppNavbar extends Component {
 
 
@@ -54,23 +64,35 @@ class AppNavbar extends Component {
         )
 
         return (
+         
+
+
+
             <div>
 
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
                         <NavbarBrand href="/">LMS</NavbarBrand>
+                       
                         <NavbarToggler onClick={this.toggle}></NavbarToggler>
                         <Collapse isOpen={this.state.isOpen} navbar></Collapse>
                         <Nav className="ml-auto" navbar>
+                        <NavItem><NavLink> <Link to="/">Home</Link></NavLink> </NavItem>
 
                         {isAuthenticated? authLinks:guestLinks}
+                        <NavItem><NavLink><Link to="/contact">Contact</Link></NavLink></NavItem>
+
 
 
                         </Nav>
+
+ 
                     </Container>
 
                 </Navbar>
             </div>
+       
+
         )
 
         //return()

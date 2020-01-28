@@ -1,27 +1,27 @@
-import {GET_ITEMS, ADD_ITEM,DELETE_ITEM,ITEMS_LOADING, UPDATE_ITEM} from './types'
+import {GET_BOOKS, ADD_BOOK,DELETE_BOOK,BOOKS_LOADING, UPDATE_BOOK} from './types'
 import axios from 'axios'
 import {tokenConfig} from './authActions' //helper function we created to get the token from local storage
 import {returnErrors} from './errorActions'
 
 
 
-export const getItems=()=> dispatch=>{
-    dispatch(setItemsLoading())
+export const getBooks=()=> dispatch=>{
+    dispatch(setBooksLoading())
     axios
-    .get('/api/items')
+    .get('/api/books')
     .then(res=>dispatch({
-        type: GET_ITEMS,
+        type: GET_BOOKS,
         payload: res.data
     }))
     .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
 }
 
-export const addItem=(newItem)=> (dispatch,getState)=>{ //get state get passed into the token config
+export const addBook=(newBook)=> (dispatch,getState)=>{ //get state get passed into the token config
     axios
-    .post('/api/items',newItem,tokenConfig(getState))
+    .post('/api/books',newBook,tokenConfig(getState))
     .then(res=>dispatch({
-        type: ADD_ITEM,
-        payload: newItem // =newItem
+        type: ADD_BOOK,
+        payload: newBook // =newBook
         
     }))
     .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
@@ -29,10 +29,10 @@ export const addItem=(newItem)=> (dispatch,getState)=>{ //get state get passed i
 }
 
 
-export const deleteItem=(id)=> (dispatch,getState)=>{
-    axios.delete(`/api/items/${id}`,tokenConfig(getState))
+export const deleteBook=(id)=> (dispatch,getState)=>{
+    axios.delete(`/api/books/${id}`,tokenConfig(getState))
     .then(res=>dispatch({
-        type:DELETE_ITEM,
+        type:DELETE_BOOK,
         payload: id
     }))
     .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
@@ -40,10 +40,10 @@ export const deleteItem=(id)=> (dispatch,getState)=>{
 
 }
 
-export const updateItem=(id,item)=>dispatch=>{
-    axios.patch(`/api/items/${id}`,item)
+export const updateBook=(id,book)=>dispatch=>{
+    axios.patch(`/api/books/${id}`,book)
     .then(res=>dispatch({
-        type: UPDATE_ITEM,
+        type: UPDATE_BOOK,
 
     }))
     .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
@@ -51,8 +51,8 @@ export const updateItem=(id,item)=>dispatch=>{
 }
 
 
-export const setItemsLoading=()=>{
+export const setBooksLoading=()=>{
     return{
-        type: ITEMS_LOADING
+        type: BOOKS_LOADING
     }
 }

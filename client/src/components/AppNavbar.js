@@ -1,4 +1,4 @@
-import React, {component, Component} from 'react'
+import React, {Component} from 'react'
 import{
     Collapse,
     Navbar,
@@ -9,6 +9,7 @@ import{
     NavLink,
     Container
 } from 'reactstrap'
+import RegisterModal from './auth/RegisterModal'
 
 class AppNavbar extends Component{
   
@@ -29,13 +30,13 @@ render(){
 
     <Navbar color="dark" dark expand="sm" className="mb-5">
         <Container>
-            <NavbarBrand href="/">Shopping List</NavbarBrand>
+            <NavbarBrand href="/">LMS</NavbarBrand>
             <NavbarToggler onClick={this.toggle}></NavbarToggler>
             <Collapse isOpen={this.state.isOpen} navbar></Collapse>
             <Nav className="ml-auto" navbar>
-                <NavItem>
-                    <NavLink href="https://google.com"> Google IT</NavLink>
-                </NavItem>
+
+                    <NavItem><RegisterModal></RegisterModal></NavItem>
+            
 
                 </Nav>
         </Container>

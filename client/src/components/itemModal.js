@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Button, Modal, ModalHeader,ModalBody,Form,FormGroup,Label,Input} from 'reactstrap'
+import {Button, Modal, ModalHeader,ModalBody,Form,FormGroup,Label,Input, Alert} from 'reactstrap'
 import {connect} from 'react-redux'
 import {addItem} from '../actions/itemActions'
+import PropTypes from 'prop-types'
 
 
 
@@ -11,6 +12,10 @@ class ItemModal extends Component{
         name: ''
     }
 
+
+    static propTypes={
+        isAuthenticated: PropTypes.bool
+    }
     //same as navbar we'll need a toggle
 
     toggle=()=>{
@@ -39,10 +44,11 @@ class ItemModal extends Component{
 
         return(
             <div>
-                <Button
+                {this.props.isAuthenticated?  <Button
                 color='dark'
                 style={{marginBottom: '2rem'}}
-                onClick={this.toggle}>Add Item</Button>
+                onClick={this.toggle}>Add Item</Button> :<Alert color='danger'>Please Login to Manage items</Alert>}
+               
 
                 <Modal isOpen={this.state.modal}
                 toggle={this.toggle}
@@ -73,6 +79,7 @@ class ItemModal extends Component{
 }
 
 const mapStateToProps=state=>({
-    item: state.item
+    item: state.item,
+    isAuthenticated: state.auth.isAuthenticated
 })
 export default connect(mapStateToProps,{addItem})(ItemModal)

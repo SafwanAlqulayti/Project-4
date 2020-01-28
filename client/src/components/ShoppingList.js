@@ -14,7 +14,11 @@ componentDidMount(){
 }
 
 
-
+static propTypes={
+    getItems: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool
+}
 onDeleteClick=(id)=>{
     this.props.deleteItem(id)
     console.log("State after"+this.props.item)
@@ -23,17 +27,18 @@ onDeleteClick=(id)=>{
     
         const {items}=this.props.item;
 
-    const displayList=items.map(({_id,name})=>(
-            <CSSTransition key={_id} timeout={500} classNames='fade'>
+    const displayList=items.map(({_id,name},index)=>(
+            <CSSTransition key={index} timeout={500} classNames='fade'>
                 <ListGroupItem>
-                <Button
+                {this.props.isAuthenticated? <Button
                       className='remove-btn'
                       color='danger'
                       size='sm'
                       onClick={this.onDeleteClick.bind(this, _id)}
                     >
                       &times;
-                    </Button>
+                    </Button>: ''}
+
                     {name}
                     <EditItem clickedItemID={_id} ></EditItem>
                 </ListGroupItem>
@@ -56,13 +61,11 @@ onDeleteClick=(id)=>{
 
 }
 
-ShoppingList.propTypes={
-    getItems: PropTypes.func.isRequired,
-    item: PropTypes.object.isRequired
-}
+
 
 const mapStateToProps=(state)=>({
-    item: state.item //same as the reducer.
+    item: state.item, //same as the reducer.
+    isAuthenticated: state.auth.isAuthenticated
 })
 export default connect(mapStateToProps,{getItems, deleteItem})
 (ShoppingList);

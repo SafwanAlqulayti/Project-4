@@ -23,6 +23,6 @@ const userSchema=new Schema({
 
 })
 
-const Item=mongoose.model('User',userSchema)
+const User=mongoose.model('User',userSchema)
 
-module.exports=Item
+module.exports=User

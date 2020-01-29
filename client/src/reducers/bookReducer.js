@@ -1,8 +1,9 @@
 
-import { GET_BOOKS, ADD_BOOK, DELETE_BOOK, BOOKS_LOADING, UPDATE_BOOK,  } from '../actions/types'
+import { GET_BOOKS, ADD_BOOK, DELETE_BOOK, BOOKS_LOADING, UPDATE_BOOK, ADD_FAILED, GET_BOOK  } from '../actions/types'
 const initialState = {
     books: [],
-    loading: false
+    loading: false,
+    selectedBook: ''
 }
 
 export default function (state = initialState, action) {
@@ -44,6 +45,17 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: true
             }
+
+            case ADD_FAILED:
+                return{
+                    ...state
+                }
+
+            case GET_BOOK:
+                return{
+                    ...state,
+                    selectedBook: action.payload
+                }
 
 
         default: return state

@@ -7,9 +7,12 @@ import {
   } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getBooks, deleteBook } from '../actions/bookActions';
+import { getBooks, deleteBook, getBook } from '../actions/bookActions';
 import PropTypes from 'prop-types';
 import NewBookForm from './NewBookForm';
+import {
+  Link
+} from 'react-router-dom';
 
 class BookList extends Component {
   static propTypes = {
@@ -28,6 +31,10 @@ class BookList extends Component {
 
   };
 
+  onClickGetBook=id=>{
+    this.props.getBook(id);
+  }
+
   render() {
     const { books } = this.props.book;
     const allBooks=books.map((book,index) => (
@@ -37,7 +44,7 @@ class BookList extends Component {
           <CardTitle><b>{book.title}</b></CardTitle>
           <CardSubtitle>{book.author}</CardSubtitle>
           <CardText>{book.description}</CardText>
-          <Button>More</Button>
+          <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook'>More</Link></Button>
           {this.props.isAuthenticated? <Button
                       className='remove-btn'
                       color='danger'
@@ -54,6 +61,7 @@ class BookList extends Component {
     
     return (
       <Container>
+        <h4>Book List</h4>
           <Row>
           
 
@@ -75,5 +83,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBooks, deleteBook }
+  { getBooks, deleteBook,getBook }
 )(BookList);

@@ -1,4 +1,4 @@
-import {GET_BOOKS, ADD_BOOK,DELETE_BOOK,BOOKS_LOADING, UPDATE_BOOK} from './types'
+import {GET_BOOKS, ADD_BOOK,DELETE_BOOK,BOOKS_LOADING, UPDATE_BOOK,ADD_FAILED,GET_BOOK} from './types'
 import axios from 'axios'
 import {tokenConfig} from './authActions' //helper function we created to get the token from local storage
 import {returnErrors} from './errorActions'
@@ -16,6 +16,17 @@ export const getBooks=()=> dispatch=>{
     .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
 }
 
+export const getBook=(id)=>(dispatch)=>{
+    axios
+    .get(`/api/books/${id}`)
+    .then(res=>dispatch({
+        type: GET_BOOK,
+        payload: res.data
+    }))
+    .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
+}
+
+
 export const addBook=(newBook)=> (dispatch,getState)=>{ //get state get passed into the token config
     axios
     .post('/api/books',newBook,tokenConfig(getState))
@@ -28,8 +39,14 @@ export const addBook=(newBook)=> (dispatch,getState)=>{ //get state get passed i
           })
         }
       })
-      .catch(error => {
-          console.log(error)
+      .catch(err => { //if something goes wrong
+        dispatch(
+          returnErrors(err.response.data, err.response.status, 'ADD_FAILED')
+        );
+        dispatch({
+          type: ADD_FAILED
+        });
+     
 
             //dispatch(returnErrors(error.response.data, error.response.status))
           

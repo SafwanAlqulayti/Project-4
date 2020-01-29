@@ -10,6 +10,9 @@ export const ADD_BOOK='ADD_BOOK'
 export const DELETE_BOOK='DELETE_BOOK'
 export const BOOKS_LOADING='BOOKS_LOADING'
 export const UPDATE_BOOK='UPDATE_BOOK'
+export const ADD_FAILED='ADD_FAILED'
+export const GET_BOOK='GET_BOOK'
+
 
 export const USER_LOADING='USER_LOADING'
 export const USER_LOADED='USER_LOADED'

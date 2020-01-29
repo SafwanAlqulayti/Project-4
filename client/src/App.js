@@ -10,6 +10,7 @@ import ItemModal from './components/itemModal'
 import {Container} from 'reactstrap'
 import Footer from './components/Footer'
 import {loadUser} from './actions/authActions'
+import DisplayBook from './components/DisplayBook'
 
 import {
   BrowserRouter as Router,
@@ -39,6 +40,9 @@ class  App extends Component{
         <Route exact path="/" component={BookList} />
 
         <Route path="/contact" component={ShoppingList} />
+
+        <Route path="/DisplayBook" component={DisplayBook} />
+
       </div>
      {/* <ShoppingList></ShoppingList> */}
      </Container>

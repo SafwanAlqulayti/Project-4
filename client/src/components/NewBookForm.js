@@ -38,15 +38,16 @@ class NewBookForm extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        // const { error, isAuthenticated } = this.props;
-        // if (error !== prevProps.error) {
-        //     // Check for register error
-        //     if (error.id === 'LOGIN_FAIL') {
-        //         this.setState({ message: error.message.message });
-        //     } else {
-        //         this.setState({ message: null });
-        //     }
-        // }
+        const { error, isAuthenticated } = this.props;
+        if (error !== prevProps.error) {
+            // Check for register error
+            if (error.id === 'ADD_FAILED') {
+                this.setState({ message: error.message.message });
+                console.log(error)
+            } else {
+                this.setState({ message: null });
+            }
+        }
 
     }
 
@@ -68,7 +69,7 @@ class NewBookForm extends Component {
             addStatus: 'added'
 
         })
-        window.location.reload();
+      //  window.location.reload();
 
         
     };

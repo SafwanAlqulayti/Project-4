@@ -18,15 +18,30 @@ router.get('/', (req,res)=>{
 })
 
 
+// @route GET api/books/:id
+// @desc GET a book using its ID
+// @access public
+
+
+router.get('/:id', (req,res)=>{
+    Book.findById(req.params.id)
+    .then(book=> res.json(book))
+})
+
 // @route POST api/books/:id
 // @desc POST a new book
 // @access  private
 
 
 router.post('/', auth,(req,res)=>{
+    const { author, ISBN } = req.body
+    if ( !author || !ISBN) {
+        return res.status(400).json({ message: 'Please enter all fields' })
+    }
+
     Book.create(req.body)
     .then((newBook)=>{res.json({new_book: newBook})})
-    .catch(error=>res.json({error:error}))
+    .catch(error=>res.json({message:error}))
 })
 
 

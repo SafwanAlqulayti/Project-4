@@ -25,8 +25,8 @@ router.get('/', (req,res)=>{
 
 router.post('/', auth,(req,res)=>{
     Book.create(req.body)
-    .then((newBook)=>{res.status(201).json({new_book: newBook})})
-    .catch(error=>res.status(500).json({error:error}))
+    .then((newBook)=>{res.json({new_book: newBook})})
+    .catch(error=>res.json({error:error}))
 })
 
 

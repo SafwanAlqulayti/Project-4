@@ -10,7 +10,7 @@ const bookSchema = new Schema({
 
     ISBN: { type: Number, isRequired: true, unique: true, min: 1000000000000, max: 9999999999999 },
 
-    img_src:{type:String, isRequired:true,default:"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-865109088-1548970937.jpg"},
+    img_src:{type:String, default:"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-865109088-1548970937.jpg"},
 
     description: { type: String, isRequired: true },
 

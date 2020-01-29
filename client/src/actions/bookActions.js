@@ -19,12 +19,29 @@ export const getBooks=()=> dispatch=>{
 export const addBook=(newBook)=> (dispatch,getState)=>{ //get state get passed into the token config
     axios
     .post('/api/books',newBook,tokenConfig(getState))
-    .then(res=>dispatch({
-        type: ADD_BOOK,
-        payload: newBook // =newBook
+
+    .then(res => {
+        if (res.data) {
+          dispatch({
+              type: ADD_BOOK,
+              payload: newBook
+          })
+        }
+      })
+      .catch(error => {
+          console.log(error)
+
+            //dispatch(returnErrors(error.response.data, error.response.status))
+          
+      });
+
+
+    // .then(res=>dispatch({
+    //     type: ADD_BOOK,
+    //     payload: newBook // =newBook
         
-    }))
-    .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
+    // }))
+    // .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
 
 }
 
@@ -35,7 +52,7 @@ export const deleteBook=(id)=> (dispatch,getState)=>{
         type:DELETE_BOOK,
         payload: id
     }))
-    .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
+    .catch(error=>  console.log(error))
 
 
 }

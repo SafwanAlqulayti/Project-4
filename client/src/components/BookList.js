@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Button, Row} from 'reactstrap';
 
 import {
     Card, CardImg, CardTitle, CardText, CardDeck,
@@ -9,6 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getBooks, deleteBook } from '../actions/bookActions';
 import PropTypes from 'prop-types';
+import NewBookForm from './NewBookForm';
 
 class BookList extends Component {
   static propTypes = {
@@ -23,6 +24,8 @@ class BookList extends Component {
 
   onDeleteClick = id => {
     this.props.deleteBook(id);
+    window.location.reload();
+
   };
 
   render() {
@@ -35,6 +38,14 @@ class BookList extends Component {
           <CardSubtitle>{book.author}</CardSubtitle>
           <CardText>{book.description}</CardText>
           <Button>More</Button>
+          {this.props.isAuthenticated? <Button
+                      className='remove-btn'
+                      color='danger'
+                      size='sm'
+                      onClick={this.onDeleteClick.bind(this, book._id)}
+                    >
+                      &times;
+                    </Button>: ''}
         </CardBody>
       </Card>
 
@@ -43,9 +54,15 @@ class BookList extends Component {
     
     return (
       <Container>
+          <Row>
+          
 
            {allBooks}
 
+          
+           </Row>
+           {this.props.isAuthenticated?  <NewBookForm></NewBookForm>: ''}
+          
       </Container>
     );
   }

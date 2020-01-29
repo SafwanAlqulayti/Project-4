@@ -30,8 +30,8 @@ class BookList extends Component {
 
   render() {
     const { books } = this.props.book;
-    const allBooks=books.map((book) => (
-        <Card style={{ width: '18rem' }}>
+    const allBooks=books.map((book,index) => (
+        <Card key={index} style={{ width: '18rem' }}>
         <CardImg  width="20px" src={book.img_src} alt="Card image cap" />
         <CardBody body className="text-center">
           <CardTitle><b>{book.title}</b></CardTitle>

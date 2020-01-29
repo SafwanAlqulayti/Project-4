@@ -68,10 +68,9 @@ class NewBookForm extends Component {
             addStatus: 'added'
 
         })
+        window.location.reload();
 
-        console.log(this.state.addStatus)
-        return <Redirect to='/' />
-
+        
     };
 
     render() {

@@ -10,7 +10,7 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addBook } from '../actions/bookActions';
+import { addBook,updateBook } from '../actions/bookActions';
 import { clearErrors } from '../actions/errorActions';
 import { Redirect } from "react-router-dom"
 
@@ -30,10 +30,31 @@ class NewBookForm extends Component {
         addStatus: ''
     };
 
+    componentDidMount(){
+        console.log(this.props.location.type)
+        if(this.props.location.type==='Edit'){
+            const currentBook=this.props.location.currentBook
+            console.log(currentBook.title)
+
+        this.setState({
+            title: currentBook.title
+            , author: currentBook.author
+            , ISBN: currentBook.ISBN
+            , description: currentBook.description
+            //  , img_src: ''
+            , publish_year: currentBook.publish_year
+            , language: currentBook.language
+            , publisher: currentBook.publisher
+            , category: currentBook.category
+            , quantity: currentBook.quantity
+        })
+        }
+    }
     static propTypes = {
         isAuthenticated: PropTypes.bool,
         error: PropTypes.object.isRequired,
         addBook: PropTypes.func.isRequired,
+        updateBook: PropTypes.func.isRequired,
         clearErrors: PropTypes.func.isRequired
     };
 
@@ -63,7 +84,14 @@ class NewBookForm extends Component {
             title, author, ISBN, description, publish_year, language, publisher, category, quantity
         }
         //attempt top login
-        this.props.addBook(book)
+        if(this.props.location.type==='Edit'){
+            this.props.updateBook(this.props.location.currentBook._id,book)
+
+        }
+        else{
+            this.props.addBook(book)
+
+        }
 
         this.setState({
             addStatus: 'added'
@@ -75,6 +103,12 @@ class NewBookForm extends Component {
     };
 
     render() {
+        if(this.props.location.type===undefined){
+             //<Alert color='danger'>Sorry, something went wrong</Alert>
+             window.location.href = "/"
+
+            
+        }
         return (
             <div>
                 {this.state.message ? (
@@ -88,6 +122,7 @@ class NewBookForm extends Component {
                             name='title'
                             id='title'
                             placeholder='Book Title'
+                            value={this.state.title}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -98,6 +133,7 @@ class NewBookForm extends Component {
                             name='author'
                             id='author'
                             placeholder='Book Author'
+                            value={this.state.author}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -108,6 +144,7 @@ class NewBookForm extends Component {
                             name='ISBN'
                             id='ISBN'
                             placeholder="Book's ISBN"
+                            value={this.state.ISBN}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -118,6 +155,7 @@ class NewBookForm extends Component {
                             name='description'
                             id='Description'
                             placeholder="About the Book"
+                            value={this.state.description}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -128,6 +166,7 @@ class NewBookForm extends Component {
                             name='publish_year'
                             id='publish_year'
                             placeholder="Year"
+                            value={this.state.publish_year}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -138,6 +177,7 @@ class NewBookForm extends Component {
                             name='language'
                             id='language'
                             placeholder="Language"
+                            value={this.state.language}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -149,6 +189,7 @@ class NewBookForm extends Component {
                             name='publisher'
                             id='publisher'
                             placeholder="Book Publisher"
+                            value={this.state.publisher}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -160,6 +201,7 @@ class NewBookForm extends Component {
                             name='category'
                             id='category'
                             placeholder="Category"
+                            value={this.state.category}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -171,6 +213,7 @@ class NewBookForm extends Component {
                             name='quantity'
                             id='quantity'
                             placeholder="Quantity"
+                            value={this.state.quantity}
                             className='mb-3'
                             onChange={this.onChange}
                         />
@@ -194,5 +237,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { addBook, clearErrors }
+    { addBook, updateBook, clearErrors }
 )(NewBookForm);

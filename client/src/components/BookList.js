@@ -45,14 +45,7 @@ class BookList extends Component {
           <CardSubtitle>{book.author}</CardSubtitle>
           <CardText>{book.description}</CardText>
           <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook'>More</Link></Button>
-          {this.props.isAuthenticated? <Button
-                      className='remove-btn'
-                      color='danger'
-                      size='sm'
-                      onClick={this.onDeleteClick.bind(this, book._id)}
-                    >
-                      &times;
-                    </Button>: ''}
+
         </CardBody>
       </Card>
 
@@ -62,6 +55,8 @@ class BookList extends Component {
     return (
       <Container>
         <h4>Book List</h4>
+        <Link to={ {pathname:'/NewBookForm', type:'New'}} >    <Button className='remove-btn' color='info'size='sm'> New Book</Button></Link> 
+
           <Row>
           
 
@@ -69,7 +64,7 @@ class BookList extends Component {
 
           
            </Row>
-           {this.props.isAuthenticated?  <NewBookForm></NewBookForm>: ''}
+           {/* {this.props.isAuthenticated?  <NewBookForm></NewBookForm>: ''} */}
           
       </Container>
     );

@@ -78,6 +78,7 @@ export const updateBook=(id,book)=>dispatch=>{
     axios.patch(`/api/books/${id}`,book)
     .then(res=>dispatch({
         type: UPDATE_BOOK,
+        payload: id
 
     }))
     .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))

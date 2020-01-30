@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { getBook, deleteBook } from '../actions/bookActions';
 import PropTypes from 'prop-types';
 import NewBookForm from './NewBookForm';
+import {
+  Link
+} from 'react-router-dom';
 
 class DisplayBook extends Component {
   static propTypes = {
@@ -18,10 +21,15 @@ class DisplayBook extends Component {
     // this.props.getBook();
   }
 
+  onDeleteClick = (id) => {
+    this.props.deleteBook(id)
+    window.location.href = "/"
+
+  }
 
 
   render() {
-
+    this.onDeleteClick = this.onDeleteClick.bind(this);
     const { selectedBook } = this.props.book;
     console.log(selectedBook)
 
@@ -36,32 +44,45 @@ class DisplayBook extends Component {
 
 
         {selectedBook ?
-<div>
-<Card >
-<CardHeader>{selectedBook.title}</CardHeader>
+          <div>
 
-<CardBody>
-<img src={selectedBook.img_src} width={400} height={600}></img>
-
-  <ListGroup variant="flush" >
-    <ListGroupItem><b>Author(s):</b>    {selectedBook.author}</ListGroupItem>
-    <ListGroupItem><b>Description:</b> {selectedBook.description}</ListGroupItem>
-    <ListGroupItem><b>Genre:</b> {selectedBook.category}</ListGroupItem>
-    <ListGroupItem><b>Published in:</b> {selectedBook.publish_year}</ListGroupItem>
-    <ListGroupItem><b>Publisher:</b> {selectedBook.publisher}</ListGroupItem>
-    <ListGroupItem><b>ISBN:</b> {selectedBook.ISBN}</ListGroupItem>
-  </ListGroup>
+      <Link to={ {pathname:'/NewBookForm', type:'Edit', currentBook:selectedBook}} >    <Button className='remove-btn' color='info'size='sm'> Update Book</Button></Link> 
+        
 
 
+            <Button
+              className='remove-btn'
+              color='danger'
+              size='sm'
+              onClick={() => { if (window.confirm(`Are you sure you want to delete ${selectedBook.title}`)) { this.onDeleteClick(selectedBook._id) }; }}
+            >
+              Delete Book
+                    </Button>
 
-</CardBody>
-<Button>Request</Button>
-  <Button>Add to my Books</Button>
-</Card>
 
- 
-</div>
-              : <Alert color='danger'>Sorry, something went wrong</Alert>}
+
+            <Card >
+              <CardHeader>{selectedBook.title}</CardHeader>
+
+              <CardBody>
+                <img src={selectedBook.img_src} width={400} height={600}></img>
+
+                <ListGroup variant="flush" >
+                  <ListGroupItem><b>Author(s):</b>    {selectedBook.author}</ListGroupItem>
+                  <ListGroupItem><b>Description:</b> {selectedBook.description}</ListGroupItem>
+                  <ListGroupItem><b>Genre:</b> {selectedBook.category}</ListGroupItem>
+                  <ListGroupItem><b>Published in:</b> {selectedBook.publish_year}</ListGroupItem>
+                  <ListGroupItem><b>Publisher:</b> {selectedBook.publisher}</ListGroupItem>
+                  <ListGroupItem><b>ISBN:</b> {selectedBook.ISBN}</ListGroupItem>
+                </ListGroup>
+              </CardBody>
+              <Button>Request</Button>
+              <Button>Add to my Books</Button>
+            </Card>
+
+
+          </div>
+          : <Alert color='danger'>Sorry, something went wrong</Alert>}
 
 
         {/* {this.props.isAuthenticated ? <NewBookForm></NewBookForm> : ''} */}
@@ -86,5 +107,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBook }
+  { getBook, deleteBook }
 )(DisplayBook);

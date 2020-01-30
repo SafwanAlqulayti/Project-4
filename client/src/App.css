@@ -33,9 +33,6 @@ fade-exit-active{
     text-align: center;
     font-size: 20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 50px;
   }
 
-  .table-borderless td,
-.table-borderless th {
-    border: 0;
-}

@@ -34,7 +34,7 @@ onDeleteClick=(id)=>{
                       className='remove-btn'
                       color='danger'
                       size='sm'
-                      onClick={this.onDeleteClick.bind(this, _id)}
+                      onClick={() => {if(window.confirm('Delete the item?')){this.removeToCollection(_id)};}}
                     >
                       &times;
                     </Button>: ''}

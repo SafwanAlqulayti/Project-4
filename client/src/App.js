@@ -11,6 +11,8 @@ import {Container} from 'reactstrap'
 import Footer from './components/Footer'
 import {loadUser} from './actions/authActions'
 import DisplayBook from './components/DisplayBook'
+import NewBookForm from './components/NewBookForm';
+
 
 import {
   BrowserRouter as Router,
@@ -42,6 +44,12 @@ class  App extends Component{
         <Route path="/contact" component={ShoppingList} />
 
         <Route path="/DisplayBook" component={DisplayBook} />
+
+        <Route path="/NewBookForm" component={NewBookForm} />
+
+
+     
+
 
       </div>
      {/* <ShoppingList></ShoppingList> */}

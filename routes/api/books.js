@@ -59,7 +59,7 @@ router.delete('/:id', auth, (req,res)=>{
 // @desc UPDATE a book
 // @access  private
 
-  router.patch('/:id', auth, (req,res)=>{
+  router.patch('/:id', auth ,(req,res)=>{
     Book.findByIdAndUpdate(req.params.id,req.body,{new:true})
     .then((updatedBook)=>{res.status(201).json({updatedBook: updatedBook})})
     .catch(error=>res.status(500).json({error:error}))

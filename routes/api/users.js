@@ -3,6 +3,8 @@ const express = require('express')
 const router = express.Router()
 
 const User = require('../../models/user')
+const Borrower = require('../../models/borrower')
+
 const bcrypt = require('bcryptjs')
 const config = require('config')
 const jwt = require('jsonwebtoken')
@@ -44,6 +46,8 @@ router.post('/', (req, res) => {
                         jwt.sign({ id: user.id }, //payload
                             config.get('jwtSecret'),
                             { expiresIn: 3600 }, //optional
+//add to borrowers' document
+
                             (err, token) => {
                                 if (err) throw err
 
@@ -56,8 +60,14 @@ router.post('/', (req, res) => {
 
                         )
 
-
-
+const newBorrower= new Borrower({userID: user})
+newBorrower.save(function (err, savedBorrower) {
+    if (err) {
+      return console.log(err);
+    } else {
+      console.log('added to borrowers table ', savedBorrower);
+    }
+  });
                     })
                 })
             })
@@ -111,5 +121,32 @@ router.post('/', (req, res) => {
 //         res.status(500).json({ error: error });
 //       });
 //   });
+
+router.get('/borrower', (req, res) => {
+
+Borrower.find().populate('userID')
+  .exec((err, borrowers) => {
+    if (err) {
+      return console.log(err);
+    }
+    const specifiedBorrower=borrowers.filter(borrower=>(borrower.userID.email=='abc@book.com'))
+    
+    res.json(specifiedBorrower)
+})
+})
+
+
+//working fine
+// router.get('/borrower', (req, res) => {
+
+//     Borrower.find().populate('userID')
+//       .exec((err, borrowers) => {
+//         if (err) {
+//           return console.log(err);
+//         }
+        
+//         res.json(borrowers)
+//     })
+//     })
 
 module.exports = router;

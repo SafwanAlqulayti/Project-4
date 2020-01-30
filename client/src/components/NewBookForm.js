@@ -97,23 +97,37 @@ class NewBookForm extends Component {
             addStatus: 'added'
 
         })
-      //  window.location.reload();
+
+      
+
+        window.location.href = "/"
 
         
     };
 
+    componentDidUpdate(){
+       return <Alert color='success'>Successfully Added a new book!</Alert>
+    }
+
     render() {
         if(this.props.location.type===undefined){
-             //<Alert color='danger'>Sorry, something went wrong</Alert>
-             window.location.href = "/"
+             return <Alert color='danger'>Sorry, something went wrong</Alert>
+            // window.location.href = "/"
+
 
             
         }
         return (
+            
             <div>
+                {this.props.isAuthenticated?
+            <div>
+                
                 {this.state.message ? (
                     <Alert color='danger'>{this.state.message}</Alert>
                 ) : null}
+
+ 
                 <Form onSubmit={this.onSubmit}>
                     <FormGroup>
                         <Label for='title'>Title</Label>
@@ -125,6 +139,7 @@ class NewBookForm extends Component {
                             value={this.state.title}
                             className='mb-3'
                             onChange={this.onChange}
+                            required 
                         />
 
                         <Label for='author'>Author</Label>
@@ -136,6 +151,7 @@ class NewBookForm extends Component {
                             value={this.state.author}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
 
                         <Label for='ISBN'>ISBN</Label>
@@ -147,6 +163,7 @@ class NewBookForm extends Component {
                             value={this.state.ISBN}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
 
                         <Label for='description'>Description</Label>
@@ -158,6 +175,7 @@ class NewBookForm extends Component {
                             value={this.state.description}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
                         <Label for='publish_year'>Publish Year</Label>
 
@@ -169,6 +187,7 @@ class NewBookForm extends Component {
                             value={this.state.publish_year}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
                         <Label for='language'>Language</Label>
 
@@ -180,6 +199,7 @@ class NewBookForm extends Component {
                             value={this.state.language}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
 
                         <Label for='publisher'>Publisher</Label>
@@ -192,6 +212,7 @@ class NewBookForm extends Component {
                             value={this.state.publisher}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
 
                         <Label for='category'>Category</Label>
@@ -204,6 +225,7 @@ class NewBookForm extends Component {
                             value={this.state.category}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
 
                         <Label for='quantity'>Quantity</Label>
@@ -216,15 +238,16 @@ class NewBookForm extends Component {
                             value={this.state.quantity}
                             className='mb-3'
                             onChange={this.onChange}
+                            required
                         />
-
-
                         <Button color='dark' style={{ marginTop: '2rem' }} block>
                             Submit
                 </Button>
                     </FormGroup>
                 </Form>
 
+            </div>
+            : <Alert color='danger'>Sorry, you're not authorized to view this page</Alert>}
             </div>
         );
     }

@@ -3,28 +3,28 @@ const express=require('express')
 const router=express.Router()
 const auth=require('../../middleware/auth')
 
-const Book=require('../../models/Book')
+const Enquiry=require('../../models/borrower').Enquiry
 
 
-// @route GET api/books
-// @desc GET all books
-// @access public
-
+// @route GET api/enquiries
+// @desc GET all enquiries
+// @access public (change it to private)
+// Only accessed by an admin
 
 router.get('/', (req,res)=>{
-    Book.find()
-    .sort({date: -1})
-    .then(books=> res.json(books))
+    Enquiry.find()
+    .then(enquiries=> res.json(enquiries))
 })
 
 
-// @route GET api/books/:id
-// @desc GET a book using its ID
-// @access public
 
+// @route GET api/enquiries/:id
+// @desc GET an enquiry using its ID
+// @access public (change it to private)
+// accessed by admin and user by clicking on a specific enquiry in a list
 
 router.get('/:id', (req,res)=>{
-    Book.findById(req.params.id)
+    Enquiry.findById(req.params.id)
     .then(book=> res.json(book))
 })
 

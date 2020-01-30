@@ -13,6 +13,8 @@ app.use(express.json());
 
 const items=require('./routes/api/items')
 const users=require('./routes/api/users')
+//const borrowers=require('./routes/api/borrower').borrower
+const enquiries=require('./routes/api/enquiries')
 const auth=require('./routes/api/auth')
 const books=require('./routes/api/books')
 const admins=require('./routes/api/admins')
@@ -25,6 +27,7 @@ app.use('/api/items',items)
 app.use('/api/users',users)
 app.use('/api/auth',auth)
 app.use('/api/books',books)
+app.use('/api/enquiries',enquiries)
 app.use('/api/admins',admins)
 
 

@@ -8,7 +8,7 @@ const bookSchema = new Schema({
 
     author: { type: String, isRequired: true },
 
-    ISBN: { type: Number, isRequired: true, unique: true, min: 1000000000000, max: 9999999999999 },
+    ISBN: { type: Number, isRequired: true, unique: true}, //check the length in the book routes when posting a book.
 
     img_src:{type:String, default:"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-865109088-1548970937.jpg"},
 

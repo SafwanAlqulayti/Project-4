@@ -52,6 +52,7 @@ class NewBookForm extends Component {
     }
     static propTypes = {
         isAuthenticated: PropTypes.bool,
+        isAdmin: PropTypes.bool,
         error: PropTypes.object.isRequired,
         addBook: PropTypes.func.isRequired,
         updateBook: PropTypes.func.isRequired,
@@ -100,7 +101,7 @@ class NewBookForm extends Component {
 
       
 
-        window.location.href = "/"
+     //   window.location.href = "/"
 
         
     };
@@ -110,6 +111,9 @@ class NewBookForm extends Component {
     }
 
     render() {
+        if(this.props.isAdmin){
+            console.log("Hello Admin")
+        }
         if(this.props.location.type===undefined){
              return <Alert color='danger'>Sorry, something went wrong</Alert>
             // window.location.href = "/"
@@ -255,6 +259,7 @@ class NewBookForm extends Component {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
+    isAdmin:state.auth.isAdmin,
     error: state.error
 });
 

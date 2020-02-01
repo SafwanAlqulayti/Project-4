@@ -19,9 +19,9 @@ import {
     BrowserRouter as Router,
     Route,
     Link
-  } from 'react-router-dom';
+} from 'react-router-dom';
 
-  import ShoppingList from './ShoppingList'
+import ShoppingList from './ShoppingList'
 
 
 
@@ -45,12 +45,26 @@ class AppNavbar extends Component {
     }
     render() {
         //from the props mapped from the state
-        const { isAuthenticated, user } = this.props.auth
+        const { isAuthenticated, user, isAdmin } = this.props.auth
+
+
+        const borrowerLinks = (<Fragment>
+            <Link to="/"> <NavItem><NavLink> My Services</NavLink> </NavItem></Link>
+
+        </Fragment>)
+
+        const adminLinks = (<Fragment>
+            <Link to="/"> <NavItem><NavLink> Admin Dashboard</NavLink> </NavItem></Link>
+        </Fragment>)
+
+
         const authLinks = (
             <Fragment>
                 <NavItem className='navbar-text mr-3'>
-                    <strong>{user? `Welcome ${user.name}`: ''}</strong>
+                    <strong>{user ? `Welcome ${user.name}` : ''}</strong>
                 </NavItem>
+               
+                {isAdmin ? adminLinks : borrowerLinks}
                 <NavItem><Logout></Logout></NavItem>
             </Fragment>
         )
@@ -63,8 +77,9 @@ class AppNavbar extends Component {
             </Fragment>
         )
 
+
         return (
-         
+
 
 
 
@@ -73,25 +88,30 @@ class AppNavbar extends Component {
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
                         <NavbarBrand href="/">LMS</NavbarBrand>
-                       
+
                         <NavbarToggler onClick={this.toggle}></NavbarToggler>
                         <Collapse isOpen={this.state.isOpen} navbar></Collapse>
                         <Nav className="ml-auto" navbar>
-                        <NavItem><NavLink> <Link to="/">Home</Link></NavLink> </NavItem>
+                        {isAuthenticated ? authLinks : guestLinks}
 
-                        {isAuthenticated? authLinks:guestLinks}
-                        <NavItem><NavLink><Link to="/contact">Contact</Link></NavLink></NavItem>
+                        {/* <Link to="/"> <NavItem><NavLink> Home</NavLink> </NavItem></Link> */}
+
+
+                            {/* {isAuthenticated ? {authLinks,(isAdmin? adminLinks:borrowerLinks )} : guestLinks} */}
+
+                            {/* {isAdmin? adminLinks:borrowerLinks} */}
+                            <Link to="/contact"><NavItem><NavLink>About</NavLink></NavItem></Link>
 
 
 
                         </Nav>
 
- 
+
                     </Container>
 
                 </Navbar>
             </div>
-       
+
 
         )
 

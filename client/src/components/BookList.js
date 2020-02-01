@@ -29,7 +29,9 @@ state={
   static propTypes = {
     getBooks: PropTypes.func.isRequired,
     books: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    isAdmin: PropTypes.bool
+
   };
 
 
@@ -87,7 +89,7 @@ state={
           <CardTitle><b>{book.title}</b></CardTitle>
           <CardSubtitle>{book.author}</CardSubtitle>
           <CardText>{book.description}</CardText>
-          <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook'>More</Link></Button>
+          <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook/hello'>More</Link></Button>
 
         </CardBody>
       </Card>
@@ -97,7 +99,9 @@ state={
     return (
       <Container>
         <h4>Book List</h4>
+        {this.props.isAdmin?
         <Link to={ {pathname:'/NewBookForm', type:'New'}} >    <Button className='remove-btn' color='info'size='sm'> New Book</Button></Link> 
+        :''}
         <div>
         <label > Search Books:  </label>
         <input type="search"  size="35" value={this.state.filterValue} onChange={this.handleFilterChange}  placeholder=" By name, author or description" results="0"/>
@@ -122,7 +126,8 @@ state={
 
 const mapStateToProps = state => ({
   book: state.book,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin:state.auth.isAdmin
 });
 
 export default connect(

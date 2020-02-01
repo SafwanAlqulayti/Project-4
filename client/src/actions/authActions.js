@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { returnErrors } from './errorActions';
 
+
 import {
   USER_LOADED,
   USER_LOADING,
@@ -9,7 +10,9 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  ADMIN_LOADED,
+  ADMIN_LOADING
 } from './types';
 
 // Check token & load user
@@ -32,6 +35,7 @@ export const loadUser = () => (dispatch, getState) => {
       });
     });
 };
+
 
 
 // Register User
@@ -114,6 +118,8 @@ export const tokenConfig = getState => {
       'Content-type': 'application/json'
     }
   };
+
+
 
   // If token, add to headers
   if (token) {

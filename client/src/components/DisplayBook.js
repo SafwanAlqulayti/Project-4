@@ -38,7 +38,7 @@ class DisplayBook extends Component {
     return (
       <div>
         <h4>Book Details</h4>
-
+      {/* <h2>  {this.props.match.params.id} </h2> for testing purposes only, add it to the book schema */}
 
 
 

@@ -14,6 +14,8 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/authActions';
+//loadAdmin
+
 import { clearErrors } from '../../actions/errorActions';
 
 class LoginModal extends Component {

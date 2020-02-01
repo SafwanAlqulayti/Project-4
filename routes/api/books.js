@@ -2,6 +2,8 @@ const express=require('express')
 
 const router=express.Router()
 const auth=require('../../middleware/auth')
+const admin=require('../../middleware/admin')
+
 
 const Book=require('../../models/Book')
 
@@ -33,21 +35,23 @@ router.get('/:id', (req,res)=>{
 // @access  private
 
 
-router.post('/', auth,(req,res)=>{
+
+router.post('/', [auth,admin],(req,res)=>{
     const { ISBN } = req.body
 
     if(ISBN){
     Book.find({ISBN:ISBN})
     .then(foundBook=> {
         if(foundBook){
-            console.log('found book')
+          //  console.log('found book')
             return res.status(400).json({ message: 'Book Already Exists!' })
 
         }})
     }
+    
     Book.create(req.body)
-    .then((newBook)=>{res.json({new_book: newBook})})
-    .catch(error=>res.json({message:error}))
+    .then((newBook)=>{res.status(201).json({new_book: newBook})})
+    .catch(error=>res.status(400).json({message:error}))
 })
 
 

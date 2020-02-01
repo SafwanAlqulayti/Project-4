@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
                     newUser.password = hash
                     newUser.save().then(user => {
 
-                        jwt.sign({ id: user.id }, //payload
+                        jwt.sign({ id: user.id , isAdmin: user.isAdmin}, //payload
                             config.get('jwtSecret'),
                             { expiresIn: 3600 }, //optional
 //add to borrowers' document
@@ -54,7 +54,7 @@ router.post('/', (req, res) => {
                                
                                     res.json({ token,
                                         user:
-                                            { id: user.id, name: user.name, email: user.email }
+                                            { id: user.id, name: user.name, email: user.email, isAdmin:user.isAdmin }
                                     })
                             }
 

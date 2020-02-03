@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { addBook,updateBook } from '../actions/bookActions';
 import { clearErrors } from '../actions/errorActions';
 import { Redirect } from "react-router-dom"
+import axios from 'axios'
 
 class NewBookForm extends Component {
     state = {
@@ -27,7 +28,8 @@ class NewBookForm extends Component {
         , category: ''
         , quantity: ''
         , message: null,
-        addStatus: ''
+        addStatus: '',
+        selectedFile:null
     };
 
     componentDidMount(){
@@ -58,6 +60,22 @@ class NewBookForm extends Component {
         updateBook: PropTypes.func.isRequired,
         clearErrors: PropTypes.func.isRequired
     };
+
+    fileSelectedHandler=event=>{
+        console.log(event.target.files[0])
+        this.setState({
+            selectedFile:event.target.files[0]
+        })
+    }
+
+    fileUploadHandler=()=>{
+        const fd=new FormData()
+        fd.append('image',this.state.selectedFile,this.state.selectedFile.name)
+        axios.post(' https://us-central1-majeed-s-library.cloudfunctions.net/uploadFile',fd)
+        .then(res=>{
+            console.log(res)
+        })
+    }
 
     componentDidUpdate(prevProps) {
         const { error, isAuthenticated } = this.props;
@@ -134,6 +152,8 @@ class NewBookForm extends Component {
  
                 <Form onSubmit={this.onSubmit}>
                     <FormGroup>
+                        <input type="file" onChange={this.fileSelectedHandler}/>
+                        <button onClick={this.fileUploadHandler}>Upload</button>
                         <Label for='title'>Title</Label>
                         <Input
                             type='title'

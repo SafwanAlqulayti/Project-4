@@ -8,13 +8,13 @@ const bookSchema = new Schema({
 
     author: { type: String, isRequired: true },
 
-    ISBN: { type: Number, isRequired: true, unique: true}, //check the length in the book routes when posting a book.
+    ISBN: { type: Number, isRequired: true, unique: true }, //check the length in the book routes when posting a book.
 
-    img_src:{type:String, default:"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-865109088-1548970937.jpg"},
+    img_src: { type: String, default: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-865109088-1548970937.jpg" },
 
     description: { type: String, isRequired: true },
 
-    publish_year: { type: Number, isRequired: true, min: 1000, max:(new Date().getFullYear())},
+    publish_year: { type: Number, isRequired: true, min: 1000, max: (new Date().getFullYear()) },
 
     language: { type: String, isRequired: true },
 
@@ -22,7 +22,10 @@ const bookSchema = new Schema({
 
     category: { type: String, isRequired: true },
 
-    quantity: { type: Number, isRequired: true, min: 0 }
+    quantity: { type: Number, isRequired: true, min: 0 },
+    
+    approvedRequests: { type: Number, isRequired: true, default: 0, min: 0 }
+
 
 })
 

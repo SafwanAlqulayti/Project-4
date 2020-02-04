@@ -87,7 +87,7 @@ class AppNavbar extends Component {
 
                 <Navbar color="dark" dark expand="sm" className="mb-5">
                     <Container>
-                        <NavbarBrand href="/">LMS</NavbarBrand>
+                       <Link to='/'> <NavbarBrand>LMS</NavbarBrand></Link>
 
                         <NavbarToggler onClick={this.toggle}></NavbarToggler>
                         <Collapse isOpen={this.state.isOpen} navbar></Collapse>

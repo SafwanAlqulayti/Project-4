@@ -5,18 +5,18 @@ const borrowRequestSchema = new Schema({
 
     borrowerID:
     {
-        type: Schema.Types.ObjectId,
-        ref: 'Borrower',
+        type: String,
         required: true,
     },
-    bookID: {
+    book: {
         type: Schema.Types.ObjectId,
         ref: 'Book',
         required: true,
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        default: 'Sent'
     },
 
     date: {
@@ -28,7 +28,16 @@ const borrowRequestSchema = new Schema({
 
     last_updated: {
         type: Date,
-        default: Date.now,
+        //default: Date.now,
+        required: false
+    },
+    note:{
+        type:String,
+        required:true,
+        default: "Request sent"
+    },
+    requestID:{
+        type: String,
         required: true
     }
 

@@ -30,6 +30,7 @@ state={
     getBooks: PropTypes.func.isRequired,
     books: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
+    user:PropTypes.object.isRequired,
     isAdmin: PropTypes.bool
 
   };
@@ -51,6 +52,7 @@ state={
     this.setState((prevState,props)=>{
       
     const { books } = this.props.book;
+    console.log(this.props.user)
      const filteredBookList=books.filter((book)=>{
        //console.log(book)
        return (book.title.toLowerCase().includes(filterValue.toLowerCase())||
@@ -65,8 +67,6 @@ state={
      }
     })
   }
-
-
 
   onDeleteClick = id => {
     this.props.deleteBook(id);
@@ -127,6 +127,7 @@ state={
 const mapStateToProps = state => ({
   book: state.book,
   isAuthenticated: state.auth.isAuthenticated,
+  user:state.auth.user,
   isAdmin:state.auth.isAdmin
 });
 

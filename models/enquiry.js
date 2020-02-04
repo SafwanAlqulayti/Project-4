@@ -3,16 +3,13 @@ const Schema = mongoose.Schema;
 
 const enquirySchema = new Schema({
 
-    borrowerID:
-    {
-        type: Schema.Types.ObjectId,
-        ref: 'Borrower',
-        required: true,
-    },
     bookID: {
         type: Schema.Types.ObjectId,
         ref: 'Book',
         required: false,
+    },
+    enquiryID:{
+        type:String
     },
     status: {
         type: String,
@@ -20,14 +17,19 @@ const enquirySchema = new Schema({
         default: 'open'
     },
 
-    enqiry_title:{
+    enquiry_title: {
         type: String,
         required: true,
     },
 
-    enqiry_body:{
+    enquiry_body: {
         type: String,
         required: true,
+    },
+
+    additional_info:{
+        type:String,
+        required: false
     },
 
 
@@ -41,13 +43,19 @@ const enquirySchema = new Schema({
     response_date: { //leave it as (updated on " " in the displaying component)
         type: Date,
         default: Date.now,
-        required: true
-    }
+        required: false
+    },
+    response:{
+        type:String
+    },
+    
+    userID: {type:String, required: true}
 
     //need to add request id as something the user can reference (concat with a time stamp)
 
 })
 
 const Enquiry = mongoose.model('Enquiry', enquirySchema)
+
 
 module.exports = Enquiry

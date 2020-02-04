@@ -67,7 +67,7 @@ class DisplayBook extends Component {
               <CardBody>
                 <img src={selectedBook.img_src} width={400} height={600}></img>
 
-                <ListGroup variant="flush" >
+                <ListGroup variant="flush" className='bookDetails'>
                   <ListGroupItem><b>Author(s):</b>    {selectedBook.author}</ListGroupItem>
                   <ListGroupItem><b>Description:</b> {selectedBook.description}</ListGroupItem>
                   <ListGroupItem><b>Genre:</b> {selectedBook.category}</ListGroupItem>

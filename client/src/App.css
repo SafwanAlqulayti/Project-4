@@ -43,3 +43,19 @@ fade-exit-active{
       margin-right: 5%;
       width: 15%
   }
+
+  .cont{
+     /* float: right; */
+      width: 80%;
+      float: right;
+
+  }
+  .homeComponent{
+      text-align: center;
+  }
+
+  .bookDetails{
+      width: 50%;
+      float: right;
+      margin-top: 5%;
+  }

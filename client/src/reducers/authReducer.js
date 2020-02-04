@@ -7,6 +7,9 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
+    BORROWER_LOADING,
+    BORROWER_LOADED,
+    GET_BORROWER
 
 } from '../actions/types';
 
@@ -15,7 +18,8 @@ const initialState = {
     isAuthenticated: null,
     isLoading: false,
     user: null,
-    isAdmin: false
+    isAdmin: false,
+    borrower: null
 }
 
 export default function (state = initialState, action) {
@@ -27,17 +31,21 @@ export default function (state = initialState, action) {
             }
 
         case USER_LOADED:
+            localStorage.setItem('useru', JSON.stringify(action.payload)) 
+
             return {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
                 user: action.payload,
-                isAdmin: action.payload.isAdmin
+                isAdmin: action.payload.isAdmin,
+
             }
 
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('token', action.payload.token) //set it to local storage
+            localStorage.setItem('useru', JSON.stringify(action.payload.user)) 
             return {
                 ...state,
                 ...action.payload,
@@ -56,8 +64,18 @@ export default function (state = initialState, action) {
                 user: null,
                 isAuthenticated: false,
                 isAdmin: false,
-                isLoading: false
+                isLoading: false,
+                borrower: null
             }
+        case GET_BORROWER:
+            return {
+
+                ...state,
+                borrower: action.payload
+
+
+            }
+
 
 
         default: return state

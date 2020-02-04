@@ -102,11 +102,14 @@ class NewBookForm extends Component {
         const book = {
             title, author, ISBN, description, publish_year, language, publisher, category, quantity
         }
+        console.log(book)
+
         //attempt top login
         if(this.props.location.type==='Edit'){
             this.props.updateBook(this.props.location.currentBook._id,book)
 
         }
+
         else{
             this.props.addBook(book)
 

@@ -16,9 +16,15 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    enquiries: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Enquiry'
+    }],
+
     register_date: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        required: true
     },
 
     isAdmin: {

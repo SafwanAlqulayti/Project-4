@@ -56,13 +56,18 @@ router.post('/', (req, res) => {
 // @desc GET user data
 // @access  private
 
+// router.get('/user', auth, (req, res) => {
+//     User.findById(req.user.id)
+//         .select('-password')
+//         .then(user => res.json(user))
+// })
+
+
 router.get('/user', auth, (req, res) => {
     User.findById(req.user.id)
         .select('-password')
         .then(user => res.json(user))
 })
-
-
 
 //since the jwt is stateless, we need a way to keep validating the current user.
 //and we can do this by using the token to get the current user.

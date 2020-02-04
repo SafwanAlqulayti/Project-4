@@ -1,9 +1,9 @@
 
-import { GET_BOOKS, ADD_BOOK, DELETE_BOOK, BOOKS_LOADING, UPDATE_BOOK, ADD_FAILED, GET_BOOK  } from '../actions/types'
+import { LOGOUT_SUCCESS, AUTH_ERROR, GET_BOOKS, ADD_BOOK, DELETE_BOOK, BOOKS_LOADING, UPDATE_BOOK, ADD_FAILED, GET_BOOK  } from '../actions/types'
 const initialState = {
     books: [],
     loading: false,
-    selectedBook: ''
+    selectedBook: null
 }
 
 export default function (state = initialState, action) {
@@ -15,6 +15,7 @@ export default function (state = initialState, action) {
                 books: action.payload,
                 loading: false
             };
+
         // the three dots means everything in the state
 
 
@@ -36,8 +37,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
 
-
-
             }
 
         case BOOKS_LOADING:
@@ -56,6 +55,7 @@ export default function (state = initialState, action) {
                     ...state,
                     selectedBook: action.payload
                 }
+ 
 
 
         default: return state

@@ -51,7 +51,16 @@ router.post('/', (req, res) => {
                             (err, token) => {
                                 if (err) throw err
 
-                               
+                                const newBorrower= new Borrower()
+                                newBorrower.userID=user.id
+                                newBorrower.save(function (err, savedBorrower) {
+                                    if (err) {
+                                      return console.log(err);
+                                    } else {
+                                      console.log('added to borrowers table ', savedBorrower);
+                                    }
+                                  });
+                                  
                                     res.json({ token,
                                         user:
                                             { id: user.id, name: user.name, email: user.email, isAdmin:user.isAdmin }
@@ -60,14 +69,7 @@ router.post('/', (req, res) => {
 
                         )
 
-const newBorrower= new Borrower({userID: user})
-newBorrower.save(function (err, savedBorrower) {
-    if (err) {
-      return console.log(err);
-    } else {
-      console.log('added to borrowers table ', savedBorrower);
-    }
-  });
+
                     })
                 })
             })
@@ -122,18 +124,18 @@ newBorrower.save(function (err, savedBorrower) {
 //       });
 //   });
 
-router.get('/borrower', (req, res) => {
+// router.get('/borrower', (req, res) => {
 
-Borrower.find().populate('userID')
-  .exec((err, borrowers) => {
-    if (err) {
-      return console.log(err);
-    }
-    const specifiedBorrower=borrowers.filter(borrower=>(borrower.userID.email=='abc@book.com'))
+// Borrower.find().populate('userID')
+//   .exec((err, borrowers) => {
+//     if (err) {
+//       return console.log(err);
+//     }
+//     const specifiedBorrower=borrowers.filter(borrower=>(borrower.userID.email=='abc@book.com'))
     
-    res.json(specifiedBorrower)
-})
-})
+//     res.json(specifiedBorrower)
+// })
+// })
 
 
 //working fine

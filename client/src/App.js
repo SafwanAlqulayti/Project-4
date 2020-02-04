@@ -13,6 +13,12 @@ import {loadUser} from './actions/authActions'
 import DisplayBook from './components/DisplayBook'
 import NewBookForm from './components/NewBookForm';
 import Dashboard from './components/Dashboard';
+import Home from './components/Home';
+import List from './components/List';
+import DisplayEnquiry from './components/DisplayEnquiry';
+
+
+
 
 
 import {
@@ -20,16 +26,17 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import EnquiryForm from './components/EnquiryForm';
 
 class  App extends Component{
   componentDidMount(){
-    store.dispatch(loadUser())
+    //store.dispatch(loadUser())
   }
 
   render(){
   return (
     <Router>
-    <Provider store={store}>
+    {/* <Provider store={store}> */}
        
     <div className="App">
 
@@ -39,20 +46,33 @@ class  App extends Component{
 
      <Dashboard></Dashboard>
 
-     <Container>
+     <Container >
 
      
      {/* <ItemModal></ItemModal> */}
-     <div >
+     <div  className="cont" >
   
         {/* <Route exact path="/" component={Home} /> */}
-        <Route exact path="/" component={BookList} />
+        <Route exact path="/" component={Home} />
+        <Route  path="/BookList" component={BookList} />
+
 
         <Route path="/contact" component={ShoppingList} />
 
         <Route path="/DisplayBook/:id" component={DisplayBook} />
 
         <Route path="/NewBookForm" component={NewBookForm} />
+
+        <Route path="/Requests" component={() =><List listType="request"/>} />
+        <Route path="/Enquiries" component={() =><List listType="enquiry"/>} />
+        <Route path="/newEnquiry" component={EnquiryForm} />
+        <Route path='/DisplayEnquiry' component={DisplayEnquiry}/>
+
+
+
+
+
+        
 
 
      
@@ -68,7 +88,7 @@ class  App extends Component{
  
     <Footer></Footer>
 
-    </Provider>
+    {/* </Provider> */}
 
     </Router>
 

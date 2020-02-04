@@ -12,7 +12,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   ADMIN_LOADED,
-  ADMIN_LOADING
+  ADMIN_LOADING,
+  GET_BORROWER
 } from './types';
 
 // Check token & load user
@@ -128,3 +129,14 @@ export const tokenConfig = getState => {
 
   return config;
 };
+
+
+export const getBorrower=(userID)=>(dispatch)=>{
+  axios
+  .get(`/api/borrowers/getByID/${userID}`)
+  .then(res=>dispatch({
+      type: GET_BORROWER,
+      payload: res.data
+  }))
+  .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
+}

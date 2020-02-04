@@ -20,6 +20,7 @@ import {
   NavLink,
   
 } from 'reactstrap';
+import moment from 'moment'
 
 class DisplayEnquiry extends Component {
 
@@ -39,6 +40,7 @@ class DisplayEnquiry extends Component {
   componentDidMount() {
     const selectedEnquiry=this.props.selected
     console.log(selectedEnquiry)
+    console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
   }
 
 
@@ -57,7 +59,7 @@ class DisplayEnquiry extends Component {
 
     return (
       <div>
-        <h4>Details:</h4>
+       
       {/* <h2>  {this.props.match.params.id} </h2> for testing purposes only, add it to the book schema */}
 
 
@@ -72,22 +74,25 @@ class DisplayEnquiry extends Component {
 
 
             <Card >
-              <CardHeader>{selectedEnquiry.title}</CardHeader>
+              <CardHeader><h5>{selectedEnquiry.enquiry_title}</h5></CardHeader>
 
               <CardBody>
                 {/* <img src={selectedBook.img_src} width={400} height={600}></img> */}
 
-                <ListGroup variant="flush" className='bookDetails'>
-                  <ListGroupItem><b>Author(s):</b>    {selectedEnquiry.enquiry_title}</ListGroupItem>
-                  <ListGroupItem><b>Description:</b> {selectedEnquiry.enquiry_body}</ListGroupItem>
-                  <ListGroupItem><b>Genre:</b> {askedBy.name}</ListGroupItem>
-                  <ListGroupItem><b>Published in:</b> {askedBy.email}</ListGroupItem>
-                
+                <ListGroup variant="flush" className="enquiryDetails">
+                  <ListGroupItem><b>Posted By:</b>    {askedBy.name}</ListGroupItem>
+                  <ListGroupItem><b>Email:</b> {askedBy.email}</ListGroupItem>
+                  <ListGroupItem><b>Question:</b> {selectedEnquiry.enquiry_body}</ListGroupItem>
+                  <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.submitted_date).format('LLL')}</ListGroupItem>
+          
+
+
+
                 </ListGroup>
               </CardBody>
               {this.props.isAdmin?
               <div>
-              <Label for='response'>Response</Label>
+              <Label for='response'><h4>Response</h4></Label>
                                 <Input
                                     type='textarea'
                                     name='response'

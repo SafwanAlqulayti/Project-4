@@ -82,13 +82,15 @@ class  App extends Component{
 
       </div>
      {/* <ShoppingList></ShoppingList> */}
-     </Container>
-     {/* <h1>Hello</h1> */}
 
+     </Container>
+
+     {/* <h1>Hello</h1> */}
      </div>
 
- 
-    <Footer></Footer>
+    <div className='clear'></div>
+     <Footer></Footer>
+
 
     {/* </Provider> */}
 

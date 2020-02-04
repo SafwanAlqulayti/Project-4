@@ -16,6 +16,8 @@ import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import List from './components/List';
 import DisplayEnquiry from './components/DisplayEnquiry';
+import EnquiryForm from './components/EnquiryForm';
+
 
 
 
@@ -26,7 +28,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import EnquiryForm from './components/EnquiryForm';
+import { MongoNetworkError } from 'mongodb';
 
 class  App extends Component{
   componentDidMount(){
@@ -63,8 +65,8 @@ class  App extends Component{
 
         <Route path="/NewBookForm" component={NewBookForm} />
 
-        <Route path="/Requests" component={() =><List listType="request"/>} />
-        <Route path="/Enquiries" component={() =><List listType="enquiry"/>} />
+        {/* <Route path="/Requests" component={() =><List listType="request"/>} /> */}
+        <Route path="/Enquiries" component={List} />
         <Route path="/newEnquiry" component={EnquiryForm} />
         <Route path='/DisplayEnquiry' component={DisplayEnquiry}/>
 

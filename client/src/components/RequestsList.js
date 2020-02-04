@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import {Button, Alert} from 'reactstrap';
 import {Link} from 'react-router-dom';
-import {getALLEnquiries,getUserEnquiries} from '../actions/enquiryActions'
+import {getALLEnquiries,getUserEnquiries,getEnquiry} from '../actions/enquiryActions'
   
 
 
@@ -28,15 +28,34 @@ class List extends Component {
         borrower:PropTypes.object.isRequired,
         getALLEnquiries:PropTypes.func.isRequired,
         getUserEnquiries:PropTypes.func.isRequired,
-        enquiries:PropTypes.object.isRequired
+        getEnquiry:PropTypes.func.isRequired,
+
+        enquiries:PropTypes.object.isRequired,
+        user:PropTypes.object.isRequired,
+
 
     }
 
+    onClickGetEnquiry=id=>{
+        this.props.getEnquiry(id);
+      }
 
 
     componentDidMount(){
-        const enquiriesByThisUser=this.props.user.enquiries
-        console.log(enquiriesByThisUser)
+       // console.log(this.props.user.id)
+       // const enquiries=this.props.enquiry
+
+        var user=JSON.parse(localStorage.getItem('useru'))
+
+        this.props.getUserEnquiries(user.id)
+
+        
+
+        console.log('found'+user.id)
+       // console.log(enquiries)
+
+        //const enquiriesByThisUser=this.props.user.enquiries
+      // console.log(enquiriesByThisUser)
         //this.props.getUserEnquiries(userID)
        // console.log(this.props.enquiries)
 
@@ -50,27 +69,21 @@ class List extends Component {
             type='Request'
             path=''
             //call getRequests function, but first check who's logged in
-            if(this.props.isAdmin){
-                //call getAllRequests
+            if(this.props.isAuthenticated){
+                //call getUserRequests
                 
 
             }
-            else if (this.props.isAuthenticated){
-                //call getUserRequests
-
-            }
+           
         }
         
         else if(this.props.listType==="enquiry"){
-            if(this.props.isAdmin){
-                this.props.getALLEnquiries()
+            if(this.props.isAuthenticated){
+                // const userID=this.props.user.id
+                // this.props.getUserEnquiries(this.props.user.id)
+                // console.log(this.props.user.enquiries)
             }
-            else if(this.props.isAuthenticated){
-                const userID=this.props.user.id
-                this.props.getUserEnquiries(userID)
-                console.log(this.props.user.enquiries)
-            }
-
+         
             heading=<h4>Enquiries</h4>
             type='Enquiry'
             path='/newEnquiry'
@@ -85,12 +98,12 @@ class List extends Component {
             //call getEnquiries function, but first check who's logged in
 
         }
-        const { enquiries } = this.props.user.enquiries;
+      //  const { enquiries } = this.props;
      //   console.log(this.state.elist)
 
       //  const userID=this.props.user.id
        // this.props.getUserEnquiries(userID)
-        console.log(this.props.enquiries)
+      //  console.log(this.props.enquiries)
 
 
 
@@ -99,7 +112,7 @@ class List extends Component {
               type: type,
               path: path,
               tableHeader:listHeader,
-              elist:enquiries
+             // elist:enquiries
 
 
         })
@@ -108,19 +121,20 @@ class List extends Component {
 
 
     render() {
-        const { enquiries } = this.props.user;
-        var hello=this.state.elist
-        const listToDisplay=enquiries.map((enquiry,index)=>
+       
+   //     var { enquiries } = this.props;
+        const {enquiries}=this.props
+
+        if(enquiries){
+             const listToDisplay=enquiries.map((enquiry,index)=>
           (
                 <tr key={index}>
-                                <th scope="row">{enquiry.enquiryID}</th>
+                                <th scope="row"><p onClick={this.onClickGetEnquiry.bind(this,enquiry.id)}><Link to='/DisplayEnquiry/'>{enquiry.enquiryID}</Link></p></th>
                                 <td>{enquiry.enquiry_title}</td>
                                 <td>{enquiry.status}</td>
                             </tr>
           )
         )
-       // console.log(enquiries)
-    
         return (
             <div>
             {!this.props.isAuthenticated?<Alert color='danger'>Sorry, You're not authorized to view this page</Alert>
@@ -145,6 +159,25 @@ class List extends Component {
             </div>}
             </div>
         )
+
+        }
+        else{
+            return(null)
+        }
+
+         //       console.log(enquiries)
+
+
+        
+        // var hello=this.state.elist
+       
+
+        //console.log(enquiries)
+        //console.log(this.props.enquiry)
+
+       // console.log(enquiries)
+    
+      
     }
 }
 
@@ -153,10 +186,11 @@ const mapStateToProps=state=>({
     enquiry:state.enquiry,
     isAuthenticated: state.auth.isAuthenticated,
     isAdmin: state.auth.isAdmin,
-    user:state.auth.user
+    user:state.auth.user,
+    enquiries:state.enquiry.enquiries,
 
 })
-export default connect(mapStateToProps,{getALLEnquiries,getUserEnquiries})(List)
+export default connect(mapStateToProps,{getALLEnquiries,getUserEnquiries,getEnquiry})(List)
 
 //export default List;
 

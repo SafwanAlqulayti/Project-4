@@ -4,29 +4,54 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { getBook, deleteBook } from '../actions/bookActions';
+import { updateEnquiry } from '../actions/enquiryActions';
+
 import PropTypes from 'prop-types';
 import NewBookForm from './NewBookForm';
 import {
   Link
 } from 'react-router-dom';
 
+import {
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  NavLink,
+  
+} from 'reactstrap';
+
 class DisplayEnquiry extends Component {
+
+
+  state={
+    response:''
+  }
   static propTypes = {
     getBook: PropTypes.func.isRequired,
     book: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    isAdmin: PropTypes.bool,
+    
+
   };
 
   componentDidMount() {
+    const selectedEnquiry=this.props.selected
+    console.log(selectedEnquiry)
   }
 
 
-
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+};
 
   render() {
    // this.onDeleteClick = this.onDeleteClick.bind(this);
-    const { selectedEnquiry } = this.props.enquiry;
+    const  selectedEnquiry = this.props.location.selected
+    const askedBy=this.props.location.postedBy
     console.log(selectedEnquiry)
+    //console.log(selectedEnquiry)
 
 
 
@@ -53,14 +78,27 @@ class DisplayEnquiry extends Component {
                 {/* <img src={selectedBook.img_src} width={400} height={600}></img> */}
 
                 <ListGroup variant="flush" className='bookDetails'>
-                  <ListGroupItem><b>Author(s):</b>    {selectedEnquiry.title}</ListGroupItem>
-                  <ListGroupItem><b>Description:</b> {selectedEnquiry.description}</ListGroupItem>
-                  <ListGroupItem><b>Genre:</b> {selectedEnquiry.category}</ListGroupItem>
-                  <ListGroupItem><b>Published in:</b> {selectedEnquiry.publish_year}</ListGroupItem>
+                  <ListGroupItem><b>Author(s):</b>    {selectedEnquiry.enquiry_title}</ListGroupItem>
+                  <ListGroupItem><b>Description:</b> {selectedEnquiry.enquiry_body}</ListGroupItem>
+                  <ListGroupItem><b>Genre:</b> {askedBy.name}</ListGroupItem>
+                  <ListGroupItem><b>Published in:</b> {askedBy.email}</ListGroupItem>
                 
                 </ListGroup>
               </CardBody>
-              <Button>Submit Response</Button>
+              {this.props.isAdmin?
+              <div>
+              <Label for='response'>Response</Label>
+                                <Input
+                                    type='textarea'
+                                    name='response'
+                                    // id='enquirybody'
+                                    placeholder='Please write your question here'
+                                    className='mb-3'
+                                    value={this.state.response}
+                                    onChange={this.onChange}
+                                    required
+                                />
+              <Button>Submit Response</Button> </div>:''}
             </Card>
 
 
@@ -85,7 +123,8 @@ class DisplayEnquiry extends Component {
 
 const mapStateToProps = state => ({
   enquiry: state.enquiry,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin
 });
 
 export default connect(

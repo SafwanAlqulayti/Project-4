@@ -102,12 +102,6 @@ class EnquiryForm extends Component {
         if (this.props.isAdmin) {
             console.log("Hello Admin")
         }
-        if (this.props.location.type === undefined) {
-            return <Alert color='danger'>Sorry, something went wrong</Alert>
-
-
-
-        }
 
         if (this.state.redirect && this.state.alert == null) {
 
@@ -122,12 +116,6 @@ class EnquiryForm extends Component {
 
                 {this.props.isAuthenticated ?
                     <div>
-
-                        {this.state.message ? (
-                            <Alert color='danger'>{this.state.message}</Alert>
-                        ) : null}
-
-
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
 

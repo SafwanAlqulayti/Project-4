@@ -26,10 +26,11 @@ class DisplayEnquiry extends Component {
 
 
   state={
-    response:''
+    response:'',
+    enquiry:''
   }
   static propTypes = {
-    getBook: PropTypes.func.isRequired,
+    updateEnquiry: PropTypes.func.isRequired,
     book: PropTypes.object.isRequired,
     isAuthenticated: PropTypes.bool,
     isAdmin: PropTypes.bool,
@@ -38,9 +39,15 @@ class DisplayEnquiry extends Component {
   };
 
   componentDidMount() {
-    const selectedEnquiry=this.props.selected
-    console.log(selectedEnquiry)
+   // const selectedEnquiry=this.props.selected
+   // console.log(selectedEnquiry)
     console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
+
+    const  selectedEnquiry = this.props.location.selected
+   // const askedBy=this.props.location.postedBy
+    this.setState({
+      enquiry:selectedEnquiry
+    })
   }
 
 
@@ -48,10 +55,33 @@ class DisplayEnquiry extends Component {
     this.setState({ [e.target.name]: e.target.value });
 };
 
+onSubmit = e => {
+  e.preventDefault();
+  const { enquiry, response} = this.state
+  const updatedEnquiry = enquiry
+  updatedEnquiry.response=response
+  console.log(updatedEnquiry)
+  console.log(updatedEnquiry._id)
+  this.props.updateEnquiry(updatedEnquiry._id, updatedEnquiry)
+  //this.showAlert();
+
+  this.setState({
+    //  addStatus: 'added',
+     // redirect: true
+
+  })
+
+
+
+};
+
   render() {
    // this.onDeleteClick = this.onDeleteClick.bind(this);
     const  selectedEnquiry = this.props.location.selected
     const askedBy=this.props.location.postedBy
+    // this.setState({
+    //   enquiry:selectedEnquiry
+    // })
     console.log(selectedEnquiry)
     //console.log(selectedEnquiry)
 
@@ -85,13 +115,24 @@ class DisplayEnquiry extends Component {
                   <ListGroupItem><b>Question:</b> {selectedEnquiry.enquiry_body}</ListGroupItem>
                   <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.submitted_date).format('LLL')}</ListGroupItem>
           
-
-
-
                 </ListGroup>
               </CardBody>
-              {this.props.isAdmin?
+
+            {selectedEnquiry.response?
+            <div>
+              <h4>Response</h4>
+              <ListGroup variant="flush" className="enquiryDetails">
+                  <ListGroupItem><b>Answered By:</b>    {askedBy.name}</ListGroupItem>
+                  <ListGroupItem><b>Response:</b> {selectedEnquiry.response}</ListGroupItem>
+                  <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.response_date).format('LLL')}</ListGroupItem>
+          
+                </ListGroup>
+                </div>
+:
+              this.props.isAdmin?
               <div>
+             <Form onSubmit={this.onSubmit}>
+
               <Label for='response'><h4>Response</h4></Label>
                                 <Input
                                     type='textarea'
@@ -103,7 +144,9 @@ class DisplayEnquiry extends Component {
                                     onChange={this.onChange}
                                     required
                                 />
-              <Button>Submit Response</Button> </div>:''}
+              <Button>Submit Response</Button>
+              </Form>
+            </div>:''}
             </Card>
 
 
@@ -134,5 +177,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBook, deleteBook }
+  { updateEnquiry, deleteBook }
 )(DisplayEnquiry);

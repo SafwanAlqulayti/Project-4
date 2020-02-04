@@ -66,13 +66,13 @@ export const getUserEnquiries=(borrowerID)=> dispatch=>{
     }
 
 
- export const updateEnquiry=(enquiryID)=> dispatch=>{
+ export const updateEnquiry=(enquiryID,updateEnquiry)=> dispatch=>{
     // dispatch(setBooksLoading())
      axios
-     .patch(`/api/enquiries/${enquiryID}`)
+     .patch(`/api/enquiries/${enquiryID}`,updateEnquiry)
      .then(res=>dispatch({
          type: UPDATE_ENQUIRY,
-         payload: res.data
+         payload: enquiryID
      }))
      .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
  }

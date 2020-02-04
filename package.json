@@ -24,6 +24,7 @@
     "mongodb": "^3.5.2",
     "mongoose": "^5.8.9",
     "nodemon": "^2.0.2",
+    "react-bootstrap-sweetalert": "^5.1.9",
     "react-router-dom": "^5.1.2"
   }
 }

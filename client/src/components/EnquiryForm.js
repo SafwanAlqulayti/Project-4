@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { submitANewEnqiry } from '../actions/enquiryActions';
 import { clearErrors } from '../actions/errorActions';
-import axios from 'axios'
 import {
     BrowserRouter as Router,
     Route,
@@ -20,16 +19,21 @@ import {
     Redirect
 } from 'react-router-dom';
 
-class NewBookForm extends Component {
-    state = {
-        enquiry_title:'',
-        enquiry_body:'',
-        additional_info:'',
-        addStatus: '',
-    };
+import SweetAlert from 'react-bootstrap-sweetalert'
 
-    componentDidMount() {
+class EnquiryForm extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            enquiry_title: '',
+            enquiry_body: '',
+            additional_info: '',
+            addStatus: '',
+            alert: null,
+            redirect: false
+        };
+        this.showAlert = this.showAlert.bind(this);
     }
 
     static propTypes = {
@@ -37,25 +41,36 @@ class NewBookForm extends Component {
         error: PropTypes.object.isRequired,
         submitANewEnqiry: PropTypes.func.isRequired,
         clearErrors: PropTypes.func.isRequired,
-        user:PropTypes.object.isRequired,
 
     };
 
+    showAlert() {
+        const getAlert = () => (
+            <SweetAlert
+                success
+                title="Success!"
+                timeout={1800}
+                showConfirm={false}
+                onConfirm={() => this.hideAlert()}
+            > Your question has been submitted
+          </SweetAlert>
+        );
 
-
-    componentDidUpdate(prevProps) {
-        const { error, isAuthenticated } = this.props;
-        if (error !== prevProps.error) {
-            // Check for register error
-            if (error.id === 'ADD_FAILED') {
-                this.setState({ message: error.message.message });
-                console.log(error)
-            } else {
-                this.setState({ message: null });
-            }
-        }
-
+        this.setState({
+            alert: getAlert()
+        });
     }
+
+    hideAlert() {
+        console.log('Hiding alert...');
+        this.setState({
+            alert: null
+        });
+    }
+
+
+
+
 
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value });
@@ -63,32 +78,24 @@ class NewBookForm extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        var user=JSON.parse(localStorage.getItem('useru'))
-        const {enquiry_title,enquiry_body,additional_info}=this.state
-        const userID=user.id
-        const newEnquiry={enquiry_title,enquiry_body,additional_info,userID}
+        var user = JSON.parse(localStorage.getItem('useru'))
+        const { enquiry_title, enquiry_body, additional_info } = this.state
+        const userID = user.id
+        const newEnquiry = { enquiry_title, enquiry_body, additional_info, userID }
         console.log(newEnquiry)
         this.props.submitANewEnqiry(newEnquiry)
-
-       // window.location.href = "/"
-
+        this.showAlert();
 
         this.setState({
-            addStatus: 'added'
+            addStatus: 'added',
+            redirect: true
 
         })
-        return <Redirect to='/enquiries' push={true}/>
 
-
-
-      //  window.location.href = "/enquiries"
-
-       // return <Redirect to='/enquiries' push={true}/>
 
     };
 
     componentDidUpdate() {
-        return <Alert color='success'>Successfully Added a new book!</Alert>
     }
 
     render() {
@@ -97,14 +104,22 @@ class NewBookForm extends Component {
         }
         if (this.props.location.type === undefined) {
             return <Alert color='danger'>Sorry, something went wrong</Alert>
-            // window.location.href = "/"
 
 
 
         }
+
+        if (this.state.redirect && this.state.alert == null) {
+
+
+            return <Redirect to='/enquiries' push={true} />
+        }
         return (
 
             <div>
+
+                {this.state.alert}
+
                 {this.props.isAuthenticated ?
                     <div>
 
@@ -135,8 +150,8 @@ class NewBookForm extends Component {
                                 <Label for='enquiry_body'>Enquiry</Label>
                                 <Input
                                     type='textarea'
-                                   name='enquiry_body'
-                                  // id='enquirybody'
+                                    name='enquiry_body'
+                                    // id='enquirybody'
                                     placeholder='Please write your question here'
                                     className='mb-3'
                                     value={this.state.body}
@@ -152,11 +167,9 @@ class NewBookForm extends Component {
                                     className='mb-3'
                                     value={this.state.additional_info}
                                     onChange={this.onChange}
-                                    
+
                                 />
 
-                                
-                               
                                 <Button color='dark' style={{ marginTop: '2rem' }} block>
                                     Submit
                                 </Button>
@@ -174,11 +187,10 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     isAdmin: state.auth.isAdmin,
     error: state.error,
-    user:state.auth.user,
 
 });
 
 export default connect(
     mapStateToProps,
     { submitANewEnqiry, clearErrors }
-)(NewBookForm);
+)(EnquiryForm);

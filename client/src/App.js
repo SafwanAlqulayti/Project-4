@@ -31,6 +31,7 @@ import {
 import { MongoNetworkError } from 'mongodb';
 import AddressForm from './components/AddressForm';
 import RequestsList from './components/RequestsList';
+import DisplayRequest from './components/DisplayRequest';
 
 class  App extends Component{
   componentDidMount(){
@@ -73,6 +74,7 @@ class  App extends Component{
         <Route path='/DisplayEnquiry' component={DisplayEnquiry}/>
         <Route path='/Address' component={AddressForm}/>
         <Route path='/Requests' component={RequestsList}/>
+        <Route path='/DisplayRequest' component={DisplayRequest}/>
 
 
 

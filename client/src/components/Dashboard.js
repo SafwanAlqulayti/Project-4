@@ -40,8 +40,6 @@ render(){
      <Link to ='/BookList' ><NavLink className='nav-link active'>Manage Books</NavLink> </Link>
      <Link to='/Requests'> <NavLink className='nav-link '>Manage Requests</NavLink> </Link>
      <Link to='/Enquiries'><NavLink className='nav-link '>Enquiries</NavLink> </Link>
-      <NavLink className='nav-link '>Manage Admins</NavLink>
-      <NavLink className='nav-link '>Settings</NavLink>
       </div>
 
       //if the user is not an admin, but still a regestired user, display user's dashboard
@@ -52,7 +50,6 @@ render(){
       <Link to='/Requests'> <NavLink className='nav-link '>My Requests</NavLink> </Link>
       <Link to='/Enquiries'><NavLink className='nav-link '>My Enquiries</NavLink> </Link>
        <NavLink className='nav-link '>Favorites</NavLink>
-       <NavLink className='nav-link '>Settings</NavLink>
        </div>
       
       

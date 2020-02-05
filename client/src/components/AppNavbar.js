@@ -48,14 +48,14 @@ class AppNavbar extends Component {
         const { isAuthenticated, user, isAdmin } = this.props.auth
 
 
-        const borrowerLinks = (<Fragment>
-            <Link to="/"> <NavItem><NavLink> My Services</NavLink> </NavItem></Link>
+        // const borrowerLinks = (<Fragment>
+        //     <Link to="/"> <NavItem><NavLink> My Services</NavLink> </NavItem></Link>
 
-        </Fragment>)
+        // </Fragment>)
 
-        const adminLinks = (<Fragment>
-            <Link to="/"> <NavItem><NavLink> Admin Dashboard</NavLink> </NavItem></Link>
-        </Fragment>)
+        // const adminLinks = (<Fragment>
+        //     <Link to="/"> <NavItem><NavLink> Admin Dashboard</NavLink> </NavItem></Link>
+        // </Fragment>)
 
 
         const authLinks = (
@@ -64,7 +64,7 @@ class AppNavbar extends Component {
                     <strong>{user ? `Welcome ${user.name}` : ''}</strong>
                 </NavItem>
                
-                {isAdmin ? adminLinks : borrowerLinks}
+                {/* {isAdmin ? adminLinks : borrowerLinks} */}
                 <NavItem><Logout></Logout></NavItem>
             </Fragment>
         )

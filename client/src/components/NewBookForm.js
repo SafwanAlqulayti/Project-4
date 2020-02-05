@@ -14,6 +14,8 @@ import { addBook,updateBook } from '../actions/bookActions';
 import { clearErrors } from '../actions/errorActions';
 import { Redirect } from "react-router-dom"
 import axios from 'axios'
+import SweetAlert from 'react-bootstrap-sweetalert'
+
 
 class NewBookForm extends Component {
     state = {
@@ -29,8 +31,37 @@ class NewBookForm extends Component {
         , quantity: ''
         , message: null,
         addStatus: '',
-        selectedFile:null
+        selectedFile:null,
+        redirect: false,
+        redirectPath:'',
+        alert: null
+
     };
+
+    showAlert() {
+        const getAlert = () => (
+            <SweetAlert
+                success
+                title="Success!"
+                timeout={1800}
+                showConfirm={false}
+                onConfirm={() => this.hideAlert()}
+            > Added {this.state.title} to the list!
+          </SweetAlert>
+        );
+      
+        this.setState({
+            alert: getAlert()
+        });
+      }
+      
+      hideAlert() {
+        console.log('Hiding alert...');
+        this.setState({
+            alert: null
+        });
+        //this.submitRequest
+      }
 
     componentDidMount(){
         console.log(this.props.location.type)
@@ -107,21 +138,23 @@ class NewBookForm extends Component {
         //attempt top login
         if(this.props.location.type==='Edit'){
             this.props.updateBook(this.props.location.currentBook._id,book)
-            return <Redirect to={{pathname:'/DisplayBook', selected:(this.props.location.currentBook)}}/>
+            this.setState({
+                redirect: true      
+            })
+            //return <Redirect to={{pathname:'/DisplayBook', selected:(this.props.location.currentBook)}}/>
 
         }
 
         else{
             this.props.addBook(book)
-            return <Redirect to='/BookList' push={true}/>
+            this.showAlert();
 
-
+            this.setState({
+              redirect: true      
+          })
+           
         }
 
-        this.setState({
-            addStatus: 'added'
-
-        })
 
       
 
@@ -135,19 +168,24 @@ class NewBookForm extends Component {
     }
 
     render() {
+        if (this.state.redirect&&this.state.alert==null){
+
+                return <Redirect to='/BookList' push={true}/>
+            
+        }
+
         if(this.props.isAdmin){
             console.log("Hello Admin")
         }
         if(this.props.location.type===undefined){
              return <Alert color='danger'>Sorry, something went wrong</Alert>
-            // window.location.href = "/"
-
-
-            
         }
+
         return (
             
+            
             <div>
+                {this.state.alert}
                 {this.props.isAuthenticated?
             <div>
                 

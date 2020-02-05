@@ -73,7 +73,7 @@ class DisplayBook extends Component {
 
               {this.props.isAuthenticated&&!this.props.isAdmin?
               <div className='wrapper'>
-             <Link to={{pathname:'/Address' ,book:selectedBook}}><Button link to={{pathname:'/Address' ,book:selectedBook}}>Request</Button></Link> 
+             <Link to={{pathname:'/Address' ,book:selectedBook}}><Button color="info" link to={{pathname:'/Address' ,book:selectedBook}}>Submit a Request</Button></Link> 
              </div>
              :""}
               {/* <Button >Add to my Books</Button> */}

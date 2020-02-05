@@ -98,7 +98,7 @@ height:60px;}
     background-image:url('http://www.projgirlspire.com/wp-content/uploads/2016/10/why-you-should-read-and-re-read-these-high-school-books-as-an-adult.jpeg');
     background-size:cover;
     background-position:center;
-    height:50vh;
+    height:80vh;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -124,4 +124,10 @@ height:60px;}
 
   .wrapper {
     text-align: center;
+}
+
+.showcase-bk{
+background-color: rgba(255,255,255,0.5);
+width:70%;
+padding: 10px;
 }

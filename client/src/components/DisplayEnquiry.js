@@ -104,35 +104,42 @@ onSubmit = e => {
 
 
             <Card >
-              <CardHeader><h5>{selectedEnquiry.enquiry_title}</h5></CardHeader>
+              <CardHeader><h5>Question</h5></CardHeader>
 
               <CardBody>
                 {/* <img src={selectedBook.img_src} width={400} height={600}></img> */}
 
                 <ListGroup variant="flush" className="enquiryDetails">
-                  <ListGroupItem><b>Posted By:</b>    {askedBy.name}</ListGroupItem>
-                  <ListGroupItem><b>Email:</b> {askedBy.email}</ListGroupItem>
+                <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.submitted_date).format('LLL')}</ListGroupItem>
+                <ListGroupItem><b>ID:</b> {selectedEnquiry.enquiryID}</ListGroupItem>
+
+                <ListGroupItem><b>Title:</b> {selectedEnquiry.enquiry_title}</ListGroupItem>
+
                   <ListGroupItem><b>Question:</b> {selectedEnquiry.enquiry_body}</ListGroupItem>
-                  <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.submitted_date).format('LLL')}</ListGroupItem>
           
                 </ListGroup>
               </CardBody>
+</Card>
+
+             
 
             {selectedEnquiry.response?
             <div>
-              <h4>Response</h4>
-              <ListGroup variant="flush" className="enquiryDetails">
-                  <ListGroupItem><b>Answered By:</b>    {askedBy.name}</ListGroupItem>
-                  <ListGroupItem><b>Response:</b> {selectedEnquiry.response}</ListGroupItem>
-                  <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.response_date).format('LLL')}</ListGroupItem>
-          
+              <Card >
+              <CardHeader><h5>Answer</h5></CardHeader>
+              <CardBody>
+                <ListGroup variant="flush" className="enquiryDetails">
+                <ListGroupItem><b>Date:</b> {moment(selectedEnquiry.response_date).format('LLL')}</ListGroupItem>
+                <ListGroupItem><b>Response:</b> {selectedEnquiry.response}</ListGroupItem>    
                 </ListGroup>
+              </CardBody>
+              </Card>
                 </div>
 :
               this.props.isAdmin?
               <div>
              <Form onSubmit={this.onSubmit}>
-
+<br></br>
               <Label for='response'><h4>Response</h4></Label>
                                 <Input
                                     type='textarea'
@@ -147,7 +154,7 @@ onSubmit = e => {
               <Button>Submit Response</Button>
               </Form>
             </div>:''}
-            </Card>
+           
 
 
           </div>

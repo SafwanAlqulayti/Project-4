@@ -105,7 +105,7 @@ state={
         :''}
         <div>
         <label > Search Books: </label>
-        <input type="text"  size="33" value={this.state.filterValue} onChange={this.handleFilterChange}  placeholder=" By name, author or description 🔍" style={{"text-align": "center", "margin-left":"5px"}} results="0"/>
+        <input type="text"  size="33" value={this.state.filterValue} onChange={this.handleFilterChange}  placeholder="By name, author or description 🔍" style={{"text-align": "center", "margin-left":"5px"}} results="0"/>
        
         {/* <input type="image" width="10%" heigth="10%" src={searchIcon} alt="Search"/> */}
       </div>

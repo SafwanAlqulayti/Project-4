@@ -148,7 +148,7 @@ componentDidMount(){
   }
   render() {
     const  book = this.props.location.book
-    const bookTitle=book.title
+   
    // console.log(selectedBook)
    // var user = JSON.parse(localStorage.getItem('useru'))
   //  var userID=user._id
@@ -163,8 +163,18 @@ componentDidMount(){
 
 }
 
+
     return (
+  
+
+      
 <div>
+{book?
+
+<div>
+<i>You're submitting a request to borrow <strong>{book.title}</strong>, please fill in this form and we'll contact you shortly</i>
+  <div class="border-top my-3"></div>
+
 {this.state.alert}
 
       <Form onSubmit={this.onSubmit}>
@@ -197,7 +207,7 @@ componentDidMount(){
 
 
           <Label for="country">Country</Label>
-          <Input type="select" id="exampleCustomSelectDisabled" name="country" disabled>
+          <Input type="select" id="exampleCustomSelectDisabled" name="country" className='mb-3' disabled>
             <option value="">Saudi Arabia</option>
             value={this.state.country}
             onChange={this.onChange}
@@ -205,7 +215,7 @@ componentDidMount(){
 
 
           <Label for="city">City</Label>
-          <Input type="select" name="city" id="exampleSelect"disabled>
+          <Input type="select" name="city" id="exampleSelect" className='mb-3' disabled>
             <option>Jeddah </option>
             value={this.state.city}
             onChange={this.onChange}
@@ -244,10 +254,10 @@ componentDidMount(){
 
 
         </FormGroup>
-        <Button>Submit</Button>
+       <div className='wrapper'> <Button color="info">Submit</Button></div>
       </Form>
+</div> :<Alert color='danger'>Sorry, something went wrong</Alert>}
 </div>
-
     )
   }
 

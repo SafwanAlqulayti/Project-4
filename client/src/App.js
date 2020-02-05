@@ -50,8 +50,9 @@ class  App extends Component{
      <AppNavbar></AppNavbar>
 
      <header id="showcase">
-    <h1>Welcome To The Beach</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi officiis ipsum officia numquam expedita ullam.</p>
+       <div className='showcase-bk'>
+    <h3><i>“Come to the book as you would come to an unexplored land. Come without a map. Explore it and draw your own map.”– Stephen King</i></h3>
+    </div>
   </header>
 
   <Dashboard></Dashboard>

@@ -107,11 +107,14 @@ class NewBookForm extends Component {
         //attempt top login
         if(this.props.location.type==='Edit'){
             this.props.updateBook(this.props.location.currentBook._id,book)
+            return <Redirect to={{pathname:'/DisplayBook', selected:(this.props.location.currentBook)}}/>
 
         }
 
         else{
             this.props.addBook(book)
+            return <Redirect to='/BookList' push={true}/>
+
 
         }
 

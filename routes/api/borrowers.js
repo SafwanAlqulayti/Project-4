@@ -263,9 +263,8 @@ router.get('/:id/requests', (req, res) => {
 
   User.findById(req.params.id)
     .populate({path:'requests', model:'Request',
-    populate:{path:'address', model:'Address'},
-    
-   // {path:'address', model:'Address'}]
+    populate:[{path:'address', model:'Address'},
+    {path:'book', model:'Book'}]
   })
 
    // .populate('requests').populate('book') //old one

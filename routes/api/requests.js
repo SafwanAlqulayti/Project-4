@@ -23,9 +23,27 @@ function getIndex (array, value) {
 // Only accessed by an admin
 
 router.get('/', (req, res) => {
-    Request.find()
-        .then(requests => res.json(requests))
-        .catch(error => res.json({ message: error }))
+    Request.find()    
+    .populate('book')
+//     ({path:'requests', model:'Request',
+//     populate:[{path:'address', model:'Address'},
+//     {path:'book', model:'Book'}]
+//   })
+
+  .exec((err, requests) => {
+    if (err) {
+      return console.log(err);
+    }
+
+    res.json(requests) 
+
+  })
+
+  
+
+
+        // .then(requests => res.json(requests))
+        // .catch(error => res.json({ message: error }))
 })
 
 

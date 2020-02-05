@@ -24,7 +24,9 @@ const bookSchema = new Schema({
 
     quantity: { type: Number, isRequired: true, min: 0 },
     
-    approvedRequests: { type: Number, isRequired: true, default: 0, min: 0 }
+    approvedRequests: { type: Number, isRequired: true, default: 0, min: 0 },
+
+    date_added:{type:Date,isRequired:true,default:Date.now}
 
 
 })

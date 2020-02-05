@@ -127,7 +127,8 @@ componentDidMount(){
 
     const  book = this.props.location.book
     const request={book,userID}
-    const combinedValues={ full_name, phone_number, district, street,userID,book}
+    const bookTitle=book.title
+    const combinedValues={ full_name, phone_number, district, street,userID,book,bookTitle}
 
     //this.props.submitANewRequest(request)
 
@@ -144,10 +145,10 @@ componentDidMount(){
 
   
 
-
   }
   render() {
     const  book = this.props.location.book
+    const bookTitle=book.title
    // console.log(selectedBook)
    // var user = JSON.parse(localStorage.getItem('useru'))
   //  var userID=user._id
@@ -157,7 +158,9 @@ componentDidMount(){
   if (this.state.redirect && this.state.alert == null) {
 
 
-    return <Redirect to='/Requests' push={true} />
+    // return <Redirect to={{pathname:'/DisplayBook', selected:book}} />
+    return <Redirect to='/Requests' />
+
 }
 
     return (

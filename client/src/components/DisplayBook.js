@@ -34,7 +34,7 @@ class DisplayBook extends Component {
 
   render() {
     this.onDeleteClick = this.onDeleteClick.bind(this);
-    const { selectedBook } = this.props.book;
+    const  selectedBook  =this.props.location.selected
     console.log(selectedBook)
 
 

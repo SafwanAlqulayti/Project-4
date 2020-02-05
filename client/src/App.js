@@ -63,7 +63,7 @@ class  App extends Component{
 
         <Route path="/contact" component={ShoppingList} />
 
-        <Route path="/DisplayBook/:id" component={DisplayBook} />
+        <Route path="/DisplayBook" component={DisplayBook} />
 
         <Route path="/NewBookForm" component={NewBookForm} />
 

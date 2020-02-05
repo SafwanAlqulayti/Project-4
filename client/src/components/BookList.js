@@ -86,10 +86,10 @@ state={
         <Card key={index} style={{ width: '18rem' }}>
         <CardImg  width="20px" src={book.img_src} alt="Card image cap" />
         <CardBody body className="text-center">
-          <CardTitle><b>{book.title}</b></CardTitle>
+          <CardTitle onClick={this.onClickGetBook.bind(this,book._id)}><b><Link to={{pathname:'/DisplayBook', selected:book}}>{book.title}</Link></b></CardTitle>
           <CardSubtitle>{book.author}</CardSubtitle>
           <CardText>{book.description}</CardText>
-          <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook/hello'>More</Link></Button>
+          {/* <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook/hello'>More</Link></Button> */}
 
         </CardBody>
       </Card>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Button, Alert } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { getALLRequests, getUserRequests } from '../actions/requestActions'
+import moment from 'moment'
 
 
 
@@ -26,8 +27,8 @@ class RequestsList extends Component {
         requests: PropTypes.object.isRequired,
     }
 
-    onClickGetEnquiry = id => {
-        this.props.getEnquiry(id);
+    onClickGetRequest = id => {
+      //  this.props.getEnquiry(id);
     }
 
 
@@ -52,7 +53,20 @@ class RequestsList extends Component {
         var user = JSON.parse(localStorage.getItem('useru'))
 
         if (requests) {
-            const listToDisplay= <h4>List will be here</h4>
+            const listToDisplay= requests.map((request, index) =>
+            (
+                <tr key={index}>
+                    <th scope="row"><p onClick={this.onClickGetRequest.bind(this, request.id)}><Link to={{pathname:'/DisplayRequest', selected:request}}>{request.requestID}</Link></p></th>
+                    <td>{request.bookTitle}</td>
+                    <td>{request.status}</td>
+                    <td>{moment(request.date).format('LLL')}</td>
+                </tr>
+            )
+        )
+            
+            
+
+            // <h4>List will be here</h4>
             // const listToDisplay = enquiries.map((enquiry, index) =>
             //     (
             //         <tr key={index}>
@@ -73,9 +87,9 @@ class RequestsList extends Component {
 
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Title</th>
+                                        <th scope="col">Book Title</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Last Updated</th>
                                     </tr>
 
                                 </thead>
@@ -90,12 +104,15 @@ class RequestsList extends Component {
             )
 
         }
+
+
         else {
             return (null)
         }
 
     }
 }
+
 
 
 const mapStateToProps = state => ({

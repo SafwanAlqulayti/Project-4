@@ -56,7 +56,7 @@ class DisplayBook extends Component {
 
 
             <Card >
-              <CardHeader>{selectedBook.title}</CardHeader>
+              <CardHeader className="text-center"><b>{selectedBook.title}</b></CardHeader>
 
               <CardBody>
                 <img className='displayImage' src={selectedBook.img_src} width={320} height={420}></img>

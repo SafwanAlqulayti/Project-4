@@ -74,7 +74,7 @@ class NewBookForm extends Component {
                 , author: currentBook.author
                 , ISBN: currentBook.ISBN
                 , description: currentBook.description
-                , img_src: ''
+                , img_src: currentBook.img_src
                 , publish_year: currentBook.publish_year
                 , language: currentBook.language
                 , publisher: currentBook.publisher
@@ -138,9 +138,10 @@ class NewBookForm extends Component {
         //attempt top login
         if (this.props.location.type === 'Edit') {
             this.props.updateBook(this.props.location.currentBook._id, book)
-            this.setState({
-                redirect: true
-            })
+            // this.setState({
+            //     redirect: true
+            // })
+            window.location.href = "/"
             //return <Redirect to={{pathname:'/DisplayBook', selected:(this.props.location.currentBook)}}/>
 
         }
@@ -231,7 +232,7 @@ class NewBookForm extends Component {
                                     value={this.state.img_src}
                                     className='mb-3'
                                     onChange={this.onChange}
-                                    required
+                                    
                                 />
 
                                 <Label for='ISBN'>ISBN</Label>

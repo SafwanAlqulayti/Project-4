@@ -84,8 +84,9 @@ state={
 
     const allBooks=bookList.map((book,index) => (
         <Card key={index} style={{ width: '18rem' }}>
-        <CardImg  width="100%" src={book.img_src} alt="Card image cap" />
+        {/* <CardImg  width="100%" src={book.img_src} alt="Card image cap" /> */}
         <CardBody body className="text-center">
+        <img className='displayImage' src={book.img_src} width={250} height={400}></img>
           <CardTitle onClick={this.onClickGetBook.bind(this,book._id)}><b><Link to={{pathname:'/DisplayBook', selected:book}}>{book.title}</Link></b></CardTitle>
           <CardSubtitle>{book.author}</CardSubtitle>
           {/* <CardText>{book.description}</CardText> */}

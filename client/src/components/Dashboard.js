@@ -49,13 +49,10 @@ render(){
       <Link to ='/BookList' ><NavLink className='nav-link active'>Browse Books</NavLink> </Link>
       <Link to='/Requests'> <NavLink className='nav-link '>My Requests</NavLink> </Link>
       <Link to='/Enquiries'><NavLink className='nav-link '>My Enquiries</NavLink> </Link>
-       <NavLink className='nav-link '>Favorites</NavLink>
        </div>
       
       
-      :<div className="nav flex-column nav-pills dashboard" id="v-pills-tab" role="tablist" aria-orientation="vertical" display='inline'>
-      <Link to ='/BookList' ><NavLink className='nav-link active'>Browse Books</NavLink> </Link>
-      </div>}
+      :''}
 
 
 

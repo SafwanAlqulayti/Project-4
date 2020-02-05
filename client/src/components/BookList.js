@@ -84,11 +84,11 @@ state={
 
     const allBooks=bookList.map((book,index) => (
         <Card key={index} style={{ width: '18rem' }}>
-        <CardImg  width="20px" src={book.img_src} alt="Card image cap" />
+        <CardImg  width="100%" src={book.img_src} alt="Card image cap" />
         <CardBody body className="text-center">
           <CardTitle onClick={this.onClickGetBook.bind(this,book._id)}><b><Link to={{pathname:'/DisplayBook', selected:book}}>{book.title}</Link></b></CardTitle>
           <CardSubtitle>{book.author}</CardSubtitle>
-          <CardText>{book.description}</CardText>
+          {/* <CardText>{book.description}</CardText> */}
           {/* <Button onClick={this.onClickGetBook.bind(this,book._id)}><Link to='/DisplayBook/hello'>More</Link></Button> */}
 
         </CardBody>
@@ -103,8 +103,8 @@ state={
         <Link to={ {pathname:'/NewBookForm', type:'New'}} >    <Button className='remove-btn' color='info'size='sm'> New Book</Button></Link> 
         :''}
         <div>
-        <label > Search Books:  </label>
-        <input type="search"  size="35" value={this.state.filterValue} onChange={this.handleFilterChange}  placeholder=" By name, author or description" results="0"/>
+        <label > Search Books: </label>
+        <input type="text"  size="33" value={this.state.filterValue} onChange={this.handleFilterChange}  placeholder=" By name, author or description 🔍" style={{"text-align": "center", "margin-left":"5px"}} results="0"/>
        
         {/* <input type="image" width="10%" heigth="10%" src={searchIcon} alt="Search"/> */}
       </div>

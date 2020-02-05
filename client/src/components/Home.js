@@ -22,8 +22,8 @@ class Home extends Component{
       //  this.props.getBorrower(this.props.user.id)
         }
         return(
-           <div className='homeComponent'>
-               <h4>Welcome to Our Library</h4>
+           <div className='homeComponent coolHeader'>
+               {/* <h4>Welcome to Our Library</h4> */}
             
           </div>
         )

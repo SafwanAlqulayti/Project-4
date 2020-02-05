@@ -86,3 +86,42 @@ height:60px;}
       float: none;
 
   }
+
+  .coolHeader{
+    font-size: 200px;
+    clear: both;
+    height: 100%;
+    background-image: url(https://assets.entrepreneur.com/content/3x2/2000/20191219170611-GettyImages-1152794789.jpeg?width=700&crop=2:1);
+  }
+
+  #showcase{
+    background-image:url('http://www.projgirlspire.com/wp-content/uploads/2016/10/why-you-should-read-and-re-read-these-high-school-books-as-an-adult.jpeg');
+    background-size:cover;
+    background-position:center;
+    height:50vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    margin-bottom: 30px;
+    margin-top: 0;
+    /* padding:0 20px; */
+  }
+
+  #showcase h1{
+    font-size:50px;
+    line-height:1.2;
+  }
+  
+  #showcase p{
+    font-size:20px;
+  }
+
+  .displayImage{
+      border: 2px solid black;
+  }
+
+  .wrapper {
+    text-align: center;
+}

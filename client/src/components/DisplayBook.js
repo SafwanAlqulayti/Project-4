@@ -14,7 +14,8 @@ class DisplayBook extends Component {
   static propTypes = {
     getBook: PropTypes.func.isRequired,
     book: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    isAdmin:PropTypes.bool
   };
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class DisplayBook extends Component {
     console.log(selectedBook)
 
 
- 
+ if(selectedBook){
 
 
     return (
@@ -49,9 +50,38 @@ class DisplayBook extends Component {
 
 
 
-        {selectedBook ?
+        {/* {selectedBook ? */}
+
+
+
+
+            <Card >
+              <CardHeader>{selectedBook.title}</CardHeader>
+
+              <CardBody>
+                <img className='displayImage' src={selectedBook.img_src} width={320} height={420}></img>
+
+                <ListGroup variant="flush" className='bookDetails'>
+                  <ListGroupItem><b>Author(s):</b>    {selectedBook.author}</ListGroupItem>
+                  <ListGroupItem><b>Description:</b> {selectedBook.description}</ListGroupItem>
+                  <ListGroupItem><b>Genre:</b> {selectedBook.category}</ListGroupItem>
+                  <ListGroupItem><b>Published in:</b> {selectedBook.publish_year}</ListGroupItem>
+                  <ListGroupItem><b>Publisher:</b> {selectedBook.publisher}</ListGroupItem>
+                  <ListGroupItem><b>ISBN:</b> {selectedBook.ISBN}</ListGroupItem>
+                </ListGroup>
+              </CardBody>
+
+              {this.props.isAuthenticated&&!this.props.isAdmin?
+              <div className='wrapper'>
+             <Link to={{pathname:'/Address' ,book:selectedBook}}><Button link to={{pathname:'/Address' ,book:selectedBook}}>Request</Button></Link> 
+             </div>
+             :""}
+              {/* <Button >Add to my Books</Button> */}
+
+              {this.props.isAdmin?
           <div>
 
+<div className='wrapper'>
       <Link to={ {pathname:'/NewBookForm', type:'Edit', currentBook:selectedBook}} >    <Button className='remove-btn' color='info'size='sm'> Update Book</Button></Link> 
         
 
@@ -65,30 +95,13 @@ class DisplayBook extends Component {
               Delete Book
                     </Button>
 
-
-
-            <Card >
-              <CardHeader>{selectedBook.title}</CardHeader>
-
-              <CardBody>
-                <img src={selectedBook.img_src} width={400} height={600}></img>
-
-                <ListGroup variant="flush" className='bookDetails'>
-                  <ListGroupItem><b>Author(s):</b>    {selectedBook.author}</ListGroupItem>
-                  <ListGroupItem><b>Description:</b> {selectedBook.description}</ListGroupItem>
-                  <ListGroupItem><b>Genre:</b> {selectedBook.category}</ListGroupItem>
-                  <ListGroupItem><b>Published in:</b> {selectedBook.publish_year}</ListGroupItem>
-                  <ListGroupItem><b>Publisher:</b> {selectedBook.publisher}</ListGroupItem>
-                  <ListGroupItem><b>ISBN:</b> {selectedBook.ISBN}</ListGroupItem>
-                </ListGroup>
-              </CardBody>
-             <Link to={{pathname:'/Address' ,book:selectedBook}}><Button link to={{pathname:'/Address' ,book:selectedBook}}>Request</Button></Link> 
-              <Button >Add to my Books</Button>
+                    </div>
+                    </div>:""}
             </Card>
 
 
-          </div>
-          : <Alert color='danger'>Sorry, something went wrong</Alert>}
+          {/* </div> */}
+          {/* : */}
 
 
         {/* {this.props.isAuthenticated ? <NewBookForm></NewBookForm> : ''} */}
@@ -103,12 +116,17 @@ class DisplayBook extends Component {
 
       </div>
     );
+        }
+        else {
+          return(<Alert color='danger'>Sorry, something went wrong</Alert> )
+        }
   }
 }
 
 const mapStateToProps = state => ({
   book: state.book,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin
 });
 
 export default connect(

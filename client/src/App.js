@@ -49,16 +49,21 @@ class  App extends Component{
       
      <AppNavbar></AppNavbar>
 
-     <Dashboard></Dashboard>
+     <header id="showcase">
+    <h1>Welcome To The Beach</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi officiis ipsum officia numquam expedita ullam.</p>
+  </header>
+
+  <Dashboard></Dashboard>
 
      <Container >
-
+    
      
      {/* <ItemModal></ItemModal> */}
      <div  className="cont" >
   
         {/* <Route exact path="/" component={Home} /> */}
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={BookList} />
         <Route  path="/BookList" component={BookList} />
 
 

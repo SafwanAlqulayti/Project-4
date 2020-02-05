@@ -27,12 +27,18 @@ class DisplayBook extends Component {
 
   }
 
+  handleRedirect=()=>{
+      
+  }
+
 
   render() {
     this.onDeleteClick = this.onDeleteClick.bind(this);
     const { selectedBook } = this.props.book;
     console.log(selectedBook)
 
+
+ 
 
 
     return (
@@ -76,8 +82,8 @@ class DisplayBook extends Component {
                   <ListGroupItem><b>ISBN:</b> {selectedBook.ISBN}</ListGroupItem>
                 </ListGroup>
               </CardBody>
-              <Button>Request</Button>
-              <Button>Add to my Books</Button>
+             <Link to={{pathname:'/Address' ,book:selectedBook}}><Button link to={{pathname:'/Address' ,book:selectedBook}}>Request</Button></Link> 
+              <Button >Add to my Books</Button>
             </Card>
 
 

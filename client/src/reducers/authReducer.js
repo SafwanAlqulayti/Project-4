@@ -9,7 +9,8 @@ import {
     REGISTER_FAIL,
     BORROWER_LOADING,
     BORROWER_LOADED,
-    GET_BORROWER
+    GET_BORROWER,
+    ADD_ADDRESS
 
 } from '../actions/types';
 
@@ -75,6 +76,13 @@ export default function (state = initialState, action) {
 
 
             }
+
+            case ADD_ADDRESS:
+                return {
+                    ...state,
+                }
+
+
 
 
 

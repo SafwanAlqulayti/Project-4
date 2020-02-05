@@ -8,6 +8,8 @@ const Enquiry = require('../../models/enquiry')
 
 const Request = require('../../models/borrowRequest')
 const User = require('../../models/user')
+const Address = require('../../models/address')
+
 
 
 var async = require("async");
@@ -124,6 +126,8 @@ router.post('/:id/enquiries', (req, res) => {
 //})
 
 
+
+
 // @route POST api/users/:id/requests
 // @desc POST a new request
 // @access private
@@ -135,7 +139,8 @@ router.post('/:id/requests', (req, res) => {
     console.log( "Total Number of Requests:", count );
 
     newRequest.requestID=`Req00${count+1}`
-    newRequest.borrowerID=req.params.id
+    newRequest.userID=req.params.id
+    //send current user's address
     newRequest.save((err, savedRequest) => {
       res.json(savedRequest);
     });
@@ -143,6 +148,7 @@ router.post('/:id/requests', (req, res) => {
   
 
     User.findById(req.params.id, (error, foundUser) => {
+      foundUser.hasActiveRequests=true
       foundUser.requests.push(newRequest);
       foundUser.save((err, savedUser) => {
         res.json(savedUser);
@@ -224,7 +230,49 @@ router.get('/getByID/:id',(req,res)=>{
 // });
 
 
+//post address:
 
 
+router.post('/:id/address', (req, res) => {
+  const newAddress = new Address(req.body);
 
+  async.parallel([
+    function (callback) {
+     
+      newAddress.save((err, savedAddress) => {
+         if(err){
+          return res.json({ error: err })
+
+        }
+        //res.json(savedEnquiry);
+
+          callback(null, savedAddress);
+
+        });
+
+   },
+    function (callback) {
+      User.findById(req.params.id, (error, foundUser) => {
+        foundUser.address=newAddress
+        foundUser.save((err, savedUser) => {
+          console.log(savedUser)
+          if(err){
+            return res.json({ error: err })
+
+          }
+         // res.json(savedUser);
+          callback(null, savedUser );
+
+        });
+      });
+
+    }],
+
+    function (err, results) {
+      res.json({ 'results': results })
+      //your final callback here.
+  });
+  
+
+})
 module.exports = router;

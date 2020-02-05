@@ -13,7 +13,9 @@ import {
   REGISTER_FAIL,
   ADMIN_LOADED,
   ADMIN_LOADING,
-  GET_BORROWER
+  GET_BORROWER,
+  ADD_ADDRESS,
+  ADD_FAILED
 } from './types';
 
 // Check token & load user
@@ -139,4 +141,40 @@ export const getBorrower=(userID)=>(dispatch)=>{
       payload: res.data
   }))
   .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
+}
+
+
+export const addAddress=(userID,newAddress)=> (dispatch)=>{ //get state get passed into the token config
+  axios
+  .post(`/api/borrowers/${userID}/address`,newAddress)
+
+  .then(res => {
+      if (res.data) {
+        dispatch({
+            type: ADD_ADDRESS,
+            payload: newAddress
+        })
+      }
+    })
+    .catch(err => { //if something goes wrong
+      dispatch(
+        returnErrors(err.response.data, err.response.status, 'ADD_FAILED')
+      );
+      dispatch({
+        type: ADD_FAILED
+      });
+   
+
+          //dispatch(returnErrors(error.response.data, error.response.status))
+        
+    });
+
+
+  // .then(res=>dispatch({
+  //     type: ADD_BOOK,
+  //     payload: newBook // =newBook
+      
+  // }))
+  // .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
+
 }

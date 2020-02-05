@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 
 const borrowRequestSchema = new Schema({
 
-    borrowerID:
+    userID:
     {
         type: String,
         required: true,
     },
+
     book: {
         type: Schema.Types.ObjectId,
         ref: 'Book',
@@ -39,7 +40,15 @@ const borrowRequestSchema = new Schema({
     requestID:{
         type: String,
         required: true
+    },
+
+    address:{
+        type: Schema.Types.ObjectId,
+        ref: 'Address'
+
     }
+    // user_name:{type:String,required: true},
+    // email:{type:String, required:true}
 
     //need to add request id as something the user can reference (concat with a time stamp)
 

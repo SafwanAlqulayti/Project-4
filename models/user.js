@@ -24,7 +24,7 @@ const userSchema = new Schema({
 
     requests: [{
         type: Schema.Types.ObjectId,
-        ref: 'BorrowRequest'
+        ref: 'Request'
     }],
 
     borrowedBooksCount: {

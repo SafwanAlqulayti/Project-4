@@ -38,15 +38,17 @@ class RequestsList extends Component {
 
         }
 
-        else if (this.props.isAuthenticated) {
-        this.props.getUserRequests(user.id)
+        else if (this.props.isAuthenticated) 
         console.log('found' + user.id)
+        {
+        this.props.getUserRequests(user.id)
 
             }
         }
 
     render() {
         const { requests } = this.props
+        console.log(requests)
         var user = JSON.parse(localStorage.getItem('useru'))
 
         if (requests) {

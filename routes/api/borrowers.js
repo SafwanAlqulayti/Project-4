@@ -131,36 +131,51 @@ router.post('/:id/enquiries', (req, res) => {
 
 
 router.post('/:id/requests', (req, res) => {
-  const newAddress = new Address(req.body);
   const newRequest = new Request(req.body);
+  console.log('new request is '+newRequest)
+  const newAddress = new Address(req.body);
+  console.log("new address is "+newAddress)
+
 
 var count;
-  Request.countDocuments({}, function( err, count){
-    console.log( "Total Number of Requests:", count );})
 
-  newRequest.requestID=`Req00${count+1}`
-  newRequest.userID=req.params.id
-  //send current user's address
-  newRequest.address=newAddress
-
-  console.log('new request'+newRequest)
-
-  async.parallel([
-    function (callback) {
-
-    newRequest.save((err, savedRequest) => {
-      if(err){
+async.parallel([
+  function (callback) {
+    newAddress.save((err, savedAddress) => {
+       if(err){
         return res.json({ error: err })
 
       }
-  //    res.json(savedRequest);
-  //  });
-        console.log('saved!'+savedRequest)
-          callback(null, savedRequest);
 
-        });
 
-    },
+      //res.json(savedEnquiry);
+
+        callback(null, savedAddress);
+
+      });
+
+ },
+function (callback) {
+  Request.countDocuments({}, function( err, count){
+    console.log( "Total Number of Requests:", count );
+
+    newRequest.requestID=`Req00${count+1}`
+    newRequest.userID=req.params.id
+    newRequest.address=newAddress
+
+    newRequest.save((err, savedRequest) => {
+     if(err){
+      return res.json({ error: err })
+
+    }
+    //res.json(savedEnquiry);
+
+      callback(null, savedRequest);
+
+    });
+
+})},
+
     
     function (callback) {
       User.findById(req.params.id, (error, foundUser) => {
@@ -242,6 +257,46 @@ router.get('/:id/enquiries', (req, res) => {
     })
 
 })
+
+
+router.get('/:id/requests', (req, res) => {
+
+  User.findById(req.params.id)
+    .populate({path:'requests', model:'Request',
+    populate:{path:'address', model:'Address'},
+    
+   // {path:'address', model:'Address'}]
+  })
+
+   // .populate('requests').populate('book') //old one
+
+  //   {
+  //     path: 'pages.page.components'
+  //  }
+    .exec((err, borrower) => {
+      if (err) {
+        return console.log(err);
+      }
+
+      res.json(borrower.requests) 
+
+    })
+
+})
+
+
+// Car
+//   .find()
+//   .populate({
+//     path: 'partIds',
+//     model: 'Part',
+//     populate: {
+//       path: 'otherIds',
+//       model: 'Other'
+//     }
+//   })
+
+
 
 
 router.get('/getByID/:id',(req,res)=>{

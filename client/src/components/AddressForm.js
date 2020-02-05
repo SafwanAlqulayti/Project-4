@@ -35,7 +35,8 @@ class AddressForm extends Component {
     district: '',
     street: '',
     userID:'',
-    user:''
+    user:'',
+    alert: null
 
   }
 
@@ -53,10 +54,10 @@ showAlert() {
       <SweetAlert
           success
           title="Success!"
-         // timeout={1800}
+          timeout={1800}
           showConfirm={false}
           onConfirm={() => this.hideAlert()}
-      > Your question has been submitted
+      > Your request has been submitted
     </SweetAlert>
   );
 
@@ -90,13 +91,13 @@ componentDidMount(){
   };
 
 
-  submitRequest=(request)=>{
+  submitRequest=(request,address)=>{
  
    // const address=user.address
    // const userID=user._id
    // const  book = this.props.location.book
     //const request={book,address,userID}
-    this.props.submitANewRequest(request)
+    this.props.submitANewRequest(request,address)
 
   }
   onSubmit = e => {
@@ -109,11 +110,11 @@ componentDidMount(){
     //var address=user.address
    // console.log(user)
     const address = {
-      full_name, phone_number, district, street
-    }   
+      full_name, phone_number, district, street,userID}   
 
     console.log('user to be posted to ') 
   
+
 
 
 
@@ -126,9 +127,21 @@ componentDidMount(){
 
     const  book = this.props.location.book
     const request={book,userID}
+    const combinedValues={ full_name, phone_number, district, street,userID,book}
+
     //this.props.submitANewRequest(request)
 
-    this.submitRequest(request,address)
+   // this.submitRequest(request,address)
+
+    this.props.submitANewRequest(combinedValues)
+    this.showAlert();
+
+    this.setState({
+      addStatus: 'added',
+      redirect: true
+
+  })
+
   
 
 
@@ -139,7 +152,18 @@ componentDidMount(){
    // var user = JSON.parse(localStorage.getItem('useru'))
   //  var userID=user._id
   //  console.log(user)
+
+
+  if (this.state.redirect && this.state.alert == null) {
+
+
+    return <Redirect to='/Requests' push={true} />
+}
+
     return (
+<div>
+{this.state.alert}
+
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
 
@@ -219,7 +243,7 @@ componentDidMount(){
         </FormGroup>
         <Button>Submit</Button>
       </Form>
-
+</div>
 
     )
   }

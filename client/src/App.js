@@ -30,6 +30,7 @@ import {
 } from 'react-router-dom';
 import { MongoNetworkError } from 'mongodb';
 import AddressForm from './components/AddressForm';
+import RequestsList from './components/RequestsList';
 
 class  App extends Component{
   componentDidMount(){
@@ -71,6 +72,7 @@ class  App extends Component{
         <Route path="/newEnquiry" component={EnquiryForm} />
         <Route path='/DisplayEnquiry' component={DisplayEnquiry}/>
         <Route path='/Address' component={AddressForm}/>
+        <Route path='/Requests' component={RequestsList}/>
 
 
 

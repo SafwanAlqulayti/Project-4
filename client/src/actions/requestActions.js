@@ -39,9 +39,9 @@ export const getUserRequests=(borrowerID)=> dispatch=>{
 //  }
 
 
- export const submitANewRequest=(newRequest,newAddress)=> (dispatch)=>{ //get state get passed into the token config
+ export const submitANewRequest=(combined)=> (dispatch)=>{ //get state get passed into the token config
     axios
-    .post(`/api/borrowers/${newRequest.userID}/requests`,newRequest,newAddress)
+    .post(`/api/borrowers/${combined.userID}/requests`,combined)
 
     .then(res => {
         if (res.data) {
@@ -59,6 +59,7 @@ export const getUserRequests=(borrowerID)=> dispatch=>{
           type: ADD_FAILED
         });
      
+
 
             //dispatch(returnErrors(error.response.data, error.response.status))
           

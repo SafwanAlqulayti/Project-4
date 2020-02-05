@@ -131,16 +131,23 @@ router.post('/:id/enquiries', (req, res) => {
 
 
 router.post('/:id/requests', (req, res) => {
+  const newAddress = new Address(req.body);
   const newRequest = new Request(req.body);
+
+var count;
+  Request.countDocuments({}, function( err, count){
+    console.log( "Total Number of Requests:", count );})
+
+  newRequest.requestID=`Req00${count+1}`
+  newRequest.userID=req.params.id
+  //send current user's address
+  newRequest.address=newAddress
+
+  console.log('new request'+newRequest)
 
   async.parallel([
     function (callback) {
-       Request.countDocuments({}, function( err, count){
-    console.log( "Total Number of Requests:", count );
 
-    newRequest.requestID=`Req00${count+1}`
-    newRequest.userID=req.params.id
-    //send current user's address
     newRequest.save((err, savedRequest) => {
       if(err){
         return res.json({ error: err })
@@ -148,17 +155,18 @@ router.post('/:id/requests', (req, res) => {
       }
   //    res.json(savedRequest);
   //  });
-
+        console.log('saved!'+savedRequest)
           callback(null, savedRequest);
 
         });
 
-    })},
+    },
     
     function (callback) {
       User.findById(req.params.id, (error, foundUser) => {
         foundUser.hasActiveRequests=true
         foundUser.requests.push(newRequest);
+        foundUser.address=newAddress
         foundUser.save((err, savedUser) => {
           if(err){
             return res.json({ error: err })
@@ -296,12 +304,12 @@ router.post('/:id/address', (req, res) => {
 
   async.parallel([
     function (callback) {
-     
       newAddress.save((err, savedAddress) => {
          if(err){
           return res.json({ error: err })
 
         }
+
         //res.json(savedEnquiry);
 
           callback(null, savedAddress);

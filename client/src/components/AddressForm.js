@@ -109,7 +109,7 @@ componentDidMount(){
     //var address=user.address
    // console.log(user)
     const address = {
-      full_name, phone_number, district, street,userID
+      full_name, phone_number, district, street
     }   
 
     console.log('user to be posted to ') 
@@ -122,13 +122,13 @@ componentDidMount(){
     console.log(address)
 
     //const userID=this.state.userID
-    this.props.addAddress(address)
+    //this.props.addAddress(address)
 
     const  book = this.props.location.book
-    const request={book,address,userID}
+    const request={book,userID}
     //this.props.submitANewRequest(request)
 
-    this.submitRequest(request)
+    this.submitRequest(request,address)
   
 
 

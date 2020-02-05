@@ -39,9 +39,9 @@ export const getUserRequests=(borrowerID)=> dispatch=>{
 //  }
 
 
- export const submitANewRequest=(newRequest)=> (dispatch)=>{ //get state get passed into the token config
+ export const submitANewRequest=(newRequest,newAddress)=> (dispatch)=>{ //get state get passed into the token config
     axios
-    .post(`/api/borrowers/${newRequest.userID}/requests`,newRequest)
+    .post(`/api/borrowers/${newRequest.userID}/requests`,newRequest,newAddress)
 
     .then(res => {
         if (res.data) {

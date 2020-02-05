@@ -37,6 +37,7 @@ const borrowRequestSchema = new Schema({
         required:true,
         default: "Request sent"
     },
+    
     requestID:{
         type: String,
         required: true
@@ -54,6 +55,6 @@ const borrowRequestSchema = new Schema({
 
 })
 
-const BorrowRequest = mongoose.model('BorrowRequest', borrowRequestSchema)
+const Request = mongoose.model('Request', borrowRequestSchema)
 
-module.exports = BorrowRequest
+module.exports = Request

@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addAddress } from '../actions/authActions';
 import { clearErrors } from '../actions/errorActions';
+import { submitANewRequest } from '../actions/requestActions';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -31,7 +33,9 @@ class AddressForm extends Component {
     country: '',
     city: '',
     district: '',
-    street: ''
+    street: '',
+    userID:'',
+    user:''
 
   }
 
@@ -39,11 +43,46 @@ class AddressForm extends Component {
     isAuthenticated: PropTypes.bool,
     isAdmin: PropTypes.bool,
     error: PropTypes.object.isRequired,
-   // addBook: PropTypes.func.isRequired,
+   submitANewRequest: PropTypes.func.isRequired,
     addAddress: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired
 };
 
+showAlert() {
+  const getAlert = () => (
+      <SweetAlert
+          success
+          title="Success!"
+         // timeout={1800}
+          showConfirm={false}
+          onConfirm={() => this.hideAlert()}
+      > Your question has been submitted
+    </SweetAlert>
+  );
+
+  this.setState({
+      alert: getAlert()
+  });
+}
+
+hideAlert() {
+  console.log('Hiding alert...');
+  this.setState({
+      alert: null
+  });
+  //this.submitRequest
+}
+
+
+componentDidMount(){
+  const user = JSON.parse(localStorage.getItem('useru'))
+  console.log(user)
+  this.setState({
+    userID:user.id,
+    user:user
+  })
+  console.log(this.state.userID)
+}
 
 
   onChange = e => {
@@ -51,23 +90,55 @@ class AddressForm extends Component {
   };
 
 
+  submitRequest=(request)=>{
+ 
+   // const address=user.address
+   // const userID=user._id
+   // const  book = this.props.location.book
+    //const request={book,address,userID}
+    this.props.submitANewRequest(request)
+
+  }
   onSubmit = e => {
     e.preventDefault();
-    const { full_name, phone_number, district, street } = this.state;
+    const { full_name, phone_number, district, street,userID } = this.state;
+   
 
+    //const userID=user._id
+    //console.log(userID)
+    //var address=user.address
+   // console.log(user)
     const address = {
-      full_name, phone_number, district, street
-    }
-    var user = JSON.parse(localStorage.getItem('useru'))
+      full_name, phone_number, district, street,userID
+    }   
+
+    console.log('user to be posted to ') 
+  
+
+
+
+
+   
     console.log(address)
-    console.log(user.id)
-    this.props.addAddress(user._id,address)
+
+    //const userID=this.state.userID
+    this.props.addAddress(address)
+
+    const  book = this.props.location.book
+    const request={book,address,userID}
+    //this.props.submitANewRequest(request)
+
+    this.submitRequest(request)
   
 
 
   }
   render() {
-
+    const  book = this.props.location.book
+   // console.log(selectedBook)
+   // var user = JSON.parse(localStorage.getItem('useru'))
+  //  var userID=user._id
+  //  console.log(user)
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
@@ -163,6 +234,6 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { addAddress, clearErrors }
+  { addAddress, clearErrors,submitANewRequest }
 )(AddressForm);
 

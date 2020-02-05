@@ -126,36 +126,94 @@ router.post('/:id/enquiries', (req, res) => {
 //})
 
 
+//-----------------for posting requests---------------------------
 
 
-// @route POST api/users/:id/requests
-// @desc POST a new request
-// @access private
 
 router.post('/:id/requests', (req, res) => {
   const newRequest = new Request(req.body);
-  
-  Request.countDocuments({}, function( err, count){
+
+  async.parallel([
+    function (callback) {
+       Request.countDocuments({}, function( err, count){
     console.log( "Total Number of Requests:", count );
 
     newRequest.requestID=`Req00${count+1}`
     newRequest.userID=req.params.id
     //send current user's address
     newRequest.save((err, savedRequest) => {
-      res.json(savedRequest);
-    });
+      if(err){
+        return res.json({ error: err })
+
+      }
+  //    res.json(savedRequest);
+  //  });
+
+          callback(null, savedRequest);
+
+        });
+
+    })},
+    
+    function (callback) {
+      User.findById(req.params.id, (error, foundUser) => {
+        foundUser.hasActiveRequests=true
+        foundUser.requests.push(newRequest);
+        foundUser.save((err, savedUser) => {
+          if(err){
+            return res.json({ error: err })
+
+          }
+         // res.json(savedUser);
+          callback(null, savedUser );
+
+        });
+      });
+
+    }],
+
+    function (err, results) {
+      res.json({ 'results': results })
+      //your final callback here.
+  });
+  
+  
+
+
+
+}) //end of get enquiries count
+ //end of post 
+
+//-----------------------------------------------------------------------------------------------
+
+// @route POST api/users/:id/requests
+// @desc POST a new request
+// @access private
+
+// router.post('/:id/requests', (req, res) => {
+//   const newRequest = new Request(req.body);
+  
+//   Request.countDocuments({}, function( err, count){
+//     console.log( "Total Number of Requests:", count );
+
+//     newRequest.requestID=`Req00${count+1}`
+//     newRequest.userID=req.params.id
+//     //send current user's address
+//     newRequest.save((err, savedRequest) => {
+//       res.json(savedRequest);
+//     });
 
   
 
-    User.findById(req.params.id, (error, foundUser) => {
-      foundUser.hasActiveRequests=true
-      foundUser.requests.push(newRequest);
-      foundUser.save((err, savedUser) => {
-        res.json(savedUser);
-      });
-    });
-}) //end of get enquiries count
-}) //end of post 
+//     User.findById(req.params.id, (error, foundUser) => {
+//       foundUser.hasActiveRequests=true
+//       foundUser.requests.push(newRequest);
+//       foundUser.save((err, savedUser) => {
+//         res.json(savedUser);
+//       });
+//     });
+// }) //end of get enquiries count
+// }) //end of post 
 
 
 // @route GET api/users/:id/enquiries
@@ -254,6 +312,7 @@ router.post('/:id/address', (req, res) => {
     function (callback) {
       User.findById(req.params.id, (error, foundUser) => {
         foundUser.address=newAddress
+        foundUser.hasAddress=true
         foundUser.save((err, savedUser) => {
           console.log(savedUser)
           if(err){

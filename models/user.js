@@ -51,6 +51,7 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    
     hasActiveRequests:{type:Boolean, 
         required:false},
 

@@ -27,30 +27,30 @@ import {returnErrors} from './errorActions'
 // }
 
 
-export const addAddress=(userID,newAddress)=> (dispatch)=>{ //get state get passed into the token config
-    axios
-    .post(`/api/borrowes/${userID}`,newAddress)
+// export const addAddress=(userID,newAddress)=> (dispatch)=>{ //get state get passed into the token config
+//     axios
+//     .post(`/api/borrowes/${userID}`,newAddress)
 
-    .then(res => {
-        if (res.data) {
-          dispatch({
-              type: ADD_ADDRESS,
-              payload: newAddress
-          })
-        }
-      })
-      .catch(err => { //if something goes wrong
-        dispatch(
-          returnErrors(err.response.data, err.response.status, 'ADD_FAILED')
-        );
-        dispatch({
-          type: ADD_FAILED
-        });
+//     .then(res => {
+//         if (res.data) {
+//           dispatch({
+//               type: ADD_ADDRESS,
+//               payload: newAddress
+//           })
+//         }
+//       })
+//       .catch(err => { //if something goes wrong
+//         dispatch(
+//           returnErrors(err.response.data, err.response.status, 'ADD_FAILED')
+//         );
+//         dispatch({
+//           type: ADD_FAILED
+//         });
      
 
-            //dispatch(returnErrors(error.response.data, error.response.status))
+//             //dispatch(returnErrors(error.response.data, error.response.status))
           
-      });
+//       });
 
 
     // .then(res=>dispatch({
@@ -60,7 +60,7 @@ export const addAddress=(userID,newAddress)=> (dispatch)=>{ //get state get pass
     // }))
     // .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
 
-}
+//}
 
 
 // export const deleteBook=(id)=> (dispatch,getState)=>{

@@ -144,9 +144,9 @@ export const getBorrower=(userID)=>(dispatch)=>{
 }
 
 
-export const addAddress=(userID,newAddress)=> (dispatch)=>{ //get state get passed into the token config
+export const addAddress=(newAddress)=> (dispatch)=>{ //get state get passed into the token config
   axios
-  .post(`/api/borrowers/${userID}/address`,newAddress)
+  .post(`/api/borrowers/${newAddress.userID}/address`,newAddress)
 
   .then(res => {
       if (res.data) {

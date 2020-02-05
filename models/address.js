@@ -38,7 +38,13 @@ const addressSchema = new Schema({
     additional_info:{
         type:String,
         required:false
+    },
+
+    userID:{
+        type:String,
+        required: true
     }
+
     
 })
 

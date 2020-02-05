@@ -35,7 +35,7 @@ export default function (state = initialState, action) {
         case SUBMIT_REQUEST:
             return {
                 ...state,
-                requests: [action.payload, ...state.enquiries]
+                requests: [action.payload, ...state.requests]
             }
 
 
@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
         case LOGOUT_SUCCESS:
             return {
                 ...state,
-                reqyests: [],
+                requests: [],
             }
 
         default: return state

@@ -1,4 +1,4 @@
-import { GET_ALL_REQUESTS, GET_USER_REQUESTS, UPDATE_REQUEST, SUBMIT_REQUEST, ADD_FAILED,LOGOUT_SUCCESS, GET_ALL_REQUESTS, GET_USER_REQUESTS, UPDATE_REQUEST } from '../actions/types'
+import { GET_ALL_REQUESTS, GET_USER_REQUESTS, UPDATE_REQUEST, SUBMIT_REQUEST, ADD_FAILED,LOGOUT_SUCCESS } from '../actions/types'
 import axios from 'axios'
 import {tokenConfig} from './authActions' //helper function we created to get the token from local storage
 import {returnErrors} from './errorActions'

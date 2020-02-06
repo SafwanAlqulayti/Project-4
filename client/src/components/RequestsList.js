@@ -52,7 +52,8 @@ class RequestsList extends Component {
         //console.log(requests)
         var user = JSON.parse(localStorage.getItem('useru'))
 
-        if (this.props.request) {
+        if (this.props.requests) {
+            const { requests } = this.props
             const listToDisplay= requests.map((request, index) =>
             (
                 <tr key={index}>

@@ -48,12 +48,11 @@ class RequestsList extends Component {
         }
 
     render() {
-       // const { requests } = this.props
-        //console.log(requests)
+        const { requests } = this.props
+        console.log(requests)
         var user = JSON.parse(localStorage.getItem('useru'))
 
-        if (this.props.requests) {
-            const { requests } = this.props
+        if (requests) {
             const listToDisplay= requests.map((request, index) =>
             (
                 <tr key={index}>

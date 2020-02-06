@@ -22,7 +22,6 @@ import {
     Link
 } from 'react-router-dom';
 
-import ShoppingList from './ShoppingList'
 
 
 
@@ -49,23 +48,12 @@ class AppNavbar extends Component {
         const { isAuthenticated, user, isAdmin } = this.props.auth
 
 
-        // const borrowerLinks = (<Fragment>
-        //     <Link to="/"> <NavItem><NavLink> My Services</NavLink> </NavItem></Link>
-
-        // </Fragment>)
-
-        // const adminLinks = (<Fragment>
-        //     <Link to="/"> <NavItem><NavLink> Admin Dashboard</NavLink> </NavItem></Link>
-        // </Fragment>)
-
-
         const authLinks = (
             <Fragment>
                 <NavItem className='navbar-text mr-3'>
                     <strong>{user ? `Welcome ${user.name}` : ''}</strong>
                 </NavItem>
-               
-                {/* {isAdmin ? adminLinks : borrowerLinks} */}
+
                 <NavItem><Logout></Logout></NavItem>
             </Fragment>
         )
@@ -88,21 +76,14 @@ class AppNavbar extends Component {
 
                 <Navbar color="dark" dark expand="sm" >
                     <Container>
-                    <img src={MJ_Icon} width="60" height="50" /> 
-                       <Link to='/'> <NavbarBrand>Majeed's Library</NavbarBrand></Link>
+                        <img src={MJ_Icon} width="60" height="50" />
+                        <Link to='/'> <NavbarBrand>Majeed's Library</NavbarBrand></Link>
 
                         <NavbarToggler onClick={this.toggle}></NavbarToggler>
                         <Collapse isOpen={this.state.isOpen} navbar></Collapse>
                         <Nav className="ml-auto" navbar>
-                        {isAuthenticated ? authLinks : guestLinks}
+                            {isAuthenticated ? authLinks : guestLinks}
 
-                        {/* <Link to="/"> <NavItem><NavLink> Home</NavLink> </NavItem></Link> */}
-
-
-                            {/* {isAuthenticated ? {authLinks,(isAdmin? adminLinks:borrowerLinks )} : guestLinks} */}
-
-                            {/* {isAdmin? adminLinks:borrowerLinks} */}
-                            <Link to="/contact"><NavItem><NavLink>About</NavLink></NavItem></Link>
 
 
 
@@ -117,7 +98,6 @@ class AppNavbar extends Component {
 
         )
 
-        //return()
     }
 
 }

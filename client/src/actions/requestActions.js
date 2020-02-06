@@ -21,7 +21,7 @@ export const getUserRequests=(borrowerID)=> dispatch=>{
      .get(`/api/borrowers/${borrowerID}/requests`)
      .then(res=>dispatch({
          type: GET_USER_REQUESTS,
-         payload: borrowerID
+         payload: res.data
      }))
      .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
  }

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import myRequests from '../images/myRequests.png'
 
 
 import {
@@ -55,7 +56,10 @@ render(){
       :this.props.isAuthenticated?
       <div className="nav flex-column nav-pills dashboard" id="v-pills-tab" role="tablist" aria-orientation="vertical" display='inline'>
       <Link to ='/BookList' ><NavLink className='nav-link active'>Browse Books</NavLink> </Link>
-      <Link to='/Requests'> <NavLink className='nav-link '>My Requests</NavLink> </Link>
+      <Link to='/Requests'> <NavLink className='nav-link '>
+      <img src={myRequests}
+width={300} height={80}></img>
+        My Requests</NavLink> </Link>
       <Link to='/Enquiries'><NavLink className='nav-link '>My Enquiries</NavLink> </Link>
        </div>
       

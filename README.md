@@ -23,6 +23,8 @@ To install the project and run it locally, first fork and clone this repository 
 * React Bootstrap
 * axios
 
+
+
 ## Models
 * User
 * Book
@@ -30,6 +32,13 @@ To install the project and run it locally, first fork and clone this repository 
 * Enquiry
 * Address
 
+## Features
+* User Authentication
+* Password Encryption
+* Ability to Create, Read, Update and Delete Books
+* Create and Update requests
+* Create and Update user-asked questions
+* Different functions for a user and an Admin
 
 ## User Stories
 #### As a registered user, I should be able to:
@@ -63,7 +72,8 @@ I'd like to continue working on making the library better by providing the follo
 * Email vertification/ Password reset features
 * Add a section for books that were published free of charge, making the library partially digital
 * Fix Requests validator methods
-
+* Link each user to a profile to save their address for future use.
+* Enable managing admins
 
 
 ## Resources

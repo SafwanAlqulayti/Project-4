@@ -6,7 +6,7 @@ const Request = require('../../models/borrowRequest')
 
 const Book = require('../../models/Book')
 
-const Borrower = require('../../models/borrower')
+const User = require('../../models/user')
 
 var async = require("async");
 
@@ -24,7 +24,7 @@ function getIndex (array, value) {
 
 router.get('/', (req, res) => {
     Request.find()    
-    .populate('book')
+    .populate('book').populate('address')
 //     ({path:'requests', model:'Request',
 //     populate:[{path:'address', model:'Address'},
 //     {path:'book', model:'Book'}]
@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
 
     Request.findById(req.params.id)
-        .populate('book')
+        .populate('book').populate('address')
         .exec((error, foundRequest) => {
             if (error) {
                 return res.json({ error: error })
@@ -70,24 +70,24 @@ router.get('/:id', (req, res) => {
 //-------------------test patch (the most important aspect of making the requests hehe)--------------------------
 
 router.patch('/:id', (req, res) => {
-    const { status,book,borrowerID } = req.body
-    console.log("hey found"+borrowerID)
+    const { status,bookID,userID } = req.body
+    console.log("hey found"+userID)
    // var targetBookID;
    // var borrowerID='';
     var requestStatus
     var requestNote
-    if (status === "approve") {
+    if (status === "Approve") {
         requestStatus = 'Approved'
-        requestNote = "Your request has been approved! Make sure to pay a visit within 3 days to get the book."
+        requestNote = "Your request has been approved! We'll contact you as soon as the book is coming to you!"
     }
-    else if (status === "confirm") {
-        requestStatus = "Confirmed"
-        requestNote = "Your request has been confirmed"
+    else if (status === "Confirm") {
+        requestStatus = "Book Delivered"
+        requestNote = "Your Book has been delievered, enjoy spending time with your friend!"
     }
 
-    else if (status === "complete") {
-        requestStatus = 'Complete'
-        requestNote = ' '
+    else if (status === "Complete") {
+        requestStatus = 'Book Returned'
+        requestNote = "Thank You for Trusting Majeed's Library!"
     }
 
 
@@ -121,7 +121,7 @@ router.patch('/:id', (req, res) => {
         },
         function (callback) {
             //console.log('book id'+targetBookID)
-            Book.findById(book)
+            Book.findById(bookID)
                 .then(foundBook => {
 
                     // Define the set of updates to this specefic book document, based on the current status of the request.
@@ -129,11 +129,11 @@ router.patch('/:id', (req, res) => {
                     if (requestStatus === 'Approved') {
                         foundBook.approvedRequests += 1;
                     }
-                    else if (requestStatus === 'Confirmed') {
+                    else if (requestStatus === 'Book Delivered') {
                         foundBook.approvedRequests -= 1;
                         foundBook.quantity -= 1;
                     }
-                    else if (requestStatus === 'Complete') {
+                    else if (requestStatus === 'Book Returned') {
                         foundBook.quantity += 1;
                     }
 
@@ -155,17 +155,17 @@ router.patch('/:id', (req, res) => {
 
         function (callback) {
 
-            Borrower.findById(borrowerID)
+            User.findById(userID)
             //console.log("looking for the user "+borrowerID)
                 .then(foundUser => {
                     console.log(foundUser)
                     // Define the set of updates to this specefic borrower document,
 
-                    if (requestStatus === "Confirmed") {
+                    if (requestStatus === "Book Delivered") {
                         foundUser.borrowedBooksCount += 1;
                         (foundUser.borrowedBooksList).push(book);
                     }
-                    else if (requestStatus === "Complete") {
+                    else if (requestStatus === "Book Returned") {
                         foundUser.borrowedBooksCount -= 1;
                        
                         var bookIndex=foundUser.borrowedBooksList.indexOf(book)

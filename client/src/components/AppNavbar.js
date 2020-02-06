@@ -14,6 +14,7 @@ import Logout from './auth/Logout'
 import LoginModal from './auth/LoginModal'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MJ_Icon from '../images/MJ_Icon.png'
 
 import {
     BrowserRouter as Router,
@@ -87,7 +88,8 @@ class AppNavbar extends Component {
 
                 <Navbar color="dark" dark expand="sm" >
                     <Container>
-                       <Link to='/'> <NavbarBrand>LMS</NavbarBrand></Link>
+                    <img src={MJ_Icon} width="60" height="50" /> 
+                       <Link to='/'> <NavbarBrand>Majeed's Library</NavbarBrand></Link>
 
                         <NavbarToggler onClick={this.toggle}></NavbarToggler>
                         <Collapse isOpen={this.state.isOpen} navbar></Collapse>

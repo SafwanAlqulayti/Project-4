@@ -21,7 +21,7 @@ export const getUserRequests=(borrowerID)=> dispatch=>{
      .get(`/api/borrowers/${borrowerID}/requests`)
      .then(res=>dispatch({
          type: GET_USER_REQUESTS,
-         payload: res.data
+         payload: borrowerID
      }))
      .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
  }
@@ -67,13 +67,13 @@ export const getUserRequests=(borrowerID)=> dispatch=>{
     }
 
 
- export const updateRequest=(requestID,updateRequest)=> dispatch=>{
+ export const updateRequest=(updateRequest)=> dispatch=>{
     // dispatch(setBooksLoading())
      axios
-     .patch(`/api/requests/${requestID}`,updateRequest)
+     .patch(`/api/requests/${updateRequest.requestID}`,updateRequest)
      .then(res=>dispatch({
          type: UPDATE_REQUEST,
-         payload: requestID
+         payload: res.data
      }))
      .catch(error=> dispatch(returnErrors(error.response.data, error.response.status)))
  }

@@ -37,8 +37,16 @@ render(){
 <div>
     {this.props.isAdmin?
     <div className="nav flex-column nav-pills dashboard" id="v-pills-tab" role="tablist" aria-orientation="vertical" display='inline'>
-     <Link to ='/BookList' ><NavLink className='nav-link active'>Manage Books</NavLink> </Link>
-     <Link to='/Requests'> <NavLink className='nav-link '>Manage Requests</NavLink> </Link>
+     <Link to ='/BookList' ><NavLink  className='nav-link'>
+       <img src=" https://www.incimages.com/uploaded_files/image/970x450/getty_496612468_2000138820009280460_336567.jpg" width={300} height={80}></img>
+       </NavLink> </Link>
+     <Link to='/Requests'> <NavLink className='nav-link '>
+     <img src="       https://www.incimages.com/uploaded_files/image/970x450/getty_496612468_2000138820009280460_336567.jpg
+" width={300} height={80}></img>
+
+       Manage Requests</NavLink> </Link>
+
+       
      <Link to='/Enquiries'><NavLink className='nav-link '>Enquiries</NavLink> </Link>
       </div>
 

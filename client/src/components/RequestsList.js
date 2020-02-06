@@ -39,9 +39,9 @@ class RequestsList extends Component {
 
         }
 
-        else if (this.props.isAuthenticated) 
+        else {//(this.props.isAuthenticated) 
         console.log('found' + user.id)
-        {
+        
         this.props.getUserRequests(user.id)
 
             }

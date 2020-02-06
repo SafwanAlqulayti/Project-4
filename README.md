@@ -7,7 +7,7 @@
 # Majeed's Library
 
 ## Overview
-Majeed's Library offer it's users with a collection of books to know more about, submit borrowing request and get books delivered to their door! Your questions are very welcomed.
+Majeed's Library system allows admins to manage books, by adding , updating deleting and viewing them.Along with the ability to answer user's questions and manage their requests to borrow books (beta). 
 
 ## Installation
 To install the project and run it locally, first fork and clone this repository then use git bash terminal to run the command
@@ -21,7 +21,14 @@ To install the project and run it locally, first fork and clone this repository 
 * Redux
 * Reactstrap
 * React Bootstrap
-* Heroku
+* axios
+
+## Models
+* User
+* Book
+* Request
+* Enquiry
+* Address
 
 
 ## User Stories
@@ -35,7 +42,7 @@ To install the project and run it locally, first fork and clone this repository 
 
 #### As an admin, I should be able to:
 *	Add/ view / edit/ remove Books
-*	View / update users’ borrow requests (accept/reject)
+*	View / update users’ requests (accept/reject)
 *	View/ update (answer) users’ questions.
 
 #### As a guest user, I should be able to:

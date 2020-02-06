@@ -44,12 +44,12 @@ To install the project and run it locally, first fork and clone this repository 
 
 ## Screenshots
 
-# <img align="center" src="images/1.PNG"></img>
-# <img align="center" src="images/2.PNG"></img>
-# <img align="center" src="images/3.PNG"></img>
-# <img align="center" src="images/4.PNG"></img>
-# <img align="center" src="images/5.PNG"></img>
-# <img align="center" src="images/6.PNG"></img>
+# <img align="center" src="images/1.png"></img>
+# <img align="center" src="images/2.png"></img>
+# <img align="center" src="images/3.png"></img>
+# <img align="center" src="images/4.png"></img>
+# <img align="center" src="images/5.png"></img>
+# <img align="center" src="images/6.png"></img>
 
 ## Future Work
 I'd like to continue working on making the library better by providing the following:

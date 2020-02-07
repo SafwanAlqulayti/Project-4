@@ -1,11 +1,11 @@
-const express=require('express')
+const express = require('express')
 
-const router=express.Router()
-const auth=require('../../middleware/auth')
-const admin=require('../../middleware/admin')
+const router = express.Router()
+const auth = require('../../middleware/auth')
+const admin = require('../../middleware/admin')
 
 
-const Book=require('../../models/Book')
+const Book = require('../../models/Book')
 
 
 // @route GET api/books
@@ -13,10 +13,10 @@ const Book=require('../../models/Book')
 // @access public
 
 
-router.get('/', (req,res)=>{
+router.get('/', (req, res) => {
     Book.find()
-    .sort({date_addedate: -1})
-    .then(books=> res.json(books))
+        .sort({ date_addedate: -1 })
+        .then(books => res.json(books))
 })
 
 
@@ -25,9 +25,9 @@ router.get('/', (req,res)=>{
 // @access public
 
 
-router.get('/:id', (req,res)=>{
+router.get('/:id', (req, res) => {
     Book.findById(req.params.id)
-    .then(book=> res.json(book))
+        .then(book => res.json(book))
 })
 
 // @route POST api/books/:id
@@ -36,22 +36,23 @@ router.get('/:id', (req,res)=>{
 
 
 
-router.post('/', [auth,admin],(req,res)=>{
+router.post('/', [auth, admin], (req, res) => {
     const { ISBN } = req.body
 
-    if(ISBN){
-    Book.find({ISBN:ISBN})
-    .then(foundBook=> {
-        if(foundBook){
-          //  console.log('found book')
-            return res.status(400).json({ message: 'Book Already Exists!' })
+    if (ISBN) {
+        Book.find({ ISBN: ISBN })
+            .then(foundBook => {
+                if (foundBook) {
+                    //  console.log('found book')
+                    return res.status(400).json({ message: 'Book Already Exists!' })
 
-        }})
+                }
+            })
     }
-    
+
     Book.create(req.body)
-    .then((newBook)=>{res.status(201).json({new_book: newBook})})
-    .catch(error=>res.status(400).json({message:error}))
+        .then((newBook) => { res.status(201).json({ new_book: newBook }) })
+        .catch(error => res.status(400).json({ message: error }))
 })
 
 
@@ -59,20 +60,20 @@ router.post('/', [auth,admin],(req,res)=>{
 // @desc DELETE a book
 // @access  private
 
-router.delete('/:id', auth, (req,res)=>{
+router.delete('/:id', auth, (req, res) => {
     Book.findByIdAndDelete(req.params.id)
-    .then((deletedBook)=>{res.status(201).json({deleted_book: deletedBook})})
-    .catch(error=>res.status(500).json({error:error}))
+        .then((deletedBook) => { res.status(201).json({ deleted_book: deletedBook }) })
+        .catch(error => res.status(500).json({ error: error }))
 })
 
 // @route UPDATE api/books/:id
 // @desc UPDATE a book
 // @access  private
 
-  router.patch('/:id' ,(req,res)=>{
-    Book.findByIdAndUpdate(req.params.id,req.body,{new:true})
-    .then((updatedBook)=>{res.status(201).json({updatedBook: updatedBook})})
-    .catch(error=>res.status(500).json({error:error}))
+router.patch('/:id', (req, res) => {
+    Book.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then((updatedBook) => { res.status(201).json({ updatedBook: updatedBook }) })
+        .catch(error => res.status(500).json({ error: error }))
 })
 
-module.exports=router;
+module.exports = router;

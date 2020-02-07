@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
                     if (!isMatch) {
                         return res.status(400).json({ message: "Invalid Credientials" })
                     }
-                    jwt.sign({ id: user.id,isAdmin:user.isAdmin }, //payload
+                    jwt.sign({ id: user.id, isAdmin: user.isAdmin }, //payload
                         config.get('jwtSecret'),
                         { expiresIn: 3600 }, //optional
                         (err, token) => {
@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
                             res.json({
                                 token,
                                 user:
-                                    { id: user.id, name: user.name, email: user.email, isAdmin:user.isAdmin }
+                                    { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin }
                             })
                         }
 
@@ -55,12 +55,6 @@ router.post('/', (req, res) => {
 // @route GET api/auth/user
 // @desc GET user data
 // @access  private
-
-// router.get('/user', auth, (req, res) => {
-//     User.findById(req.user.id)
-//         .select('-password')
-//         .then(user => res.json(user))
-// })
 
 
 router.get('/user', auth, (req, res) => {

@@ -15,8 +15,8 @@ const Address = require('../../models/address')
 var async = require("async");
 
 
-const auth=require('../../middleware/auth')
-const admin=require('../../middleware/admin')
+const auth = require('../../middleware/auth')
+const admin = require('../../middleware/admin')
 
 //--------------------------------------------------------------------------------------------------
 //create a borrower document (just for testing the backend in this small project)
@@ -28,22 +28,22 @@ router.post('/', (req, res) => {
 })
 
 
-router.get('/', (req,res)=>{
+router.get('/', (req, res) => {
   Borrower.find()
-  .sort({date: -1})
-  .then(books=> res.json(books))
+    .sort({ date: -1 })
+    .then(books => res.json(books))
 })
 
 router.get('/:id', (req, res) => {
 
   Borrower.findById(req.params.id)
-      .populate('book')
-      .exec((error, foundRequest) => {
-          if (error) {
-              return res.json({ error: error })
-          }
-          res.json(foundRequest)
-      })
+    .populate('book')
+    .exec((error, foundRequest) => {
+      if (error) {
+        return res.json({ error: error })
+      }
+      res.json(foundRequest)
+    })
 
 })
 //--------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ router.get('/:id', (req, res) => {
 
 // router.post('/:id/enquiries', (req, res) => {
 //   const newEnquiry = new Enquiry(req.body);
-  
+
 //   Enquiry.create(newEnquiry)
 //     .then((new_Enquiry) => { res.json({ new_enquiry: new_Enquiry }) })
 //     .catch(error => res.json({ message: error }))
@@ -77,34 +77,35 @@ router.post('/:id/enquiries', (req, res) => {
 
   async.parallel([
     function (callback) {
-      Enquiry.countDocuments({}, function( err, count){
-        console.log( "Total Number of Enquiries:", count );
-    
-        newEnquiry.enquiryID=`Enq000${count+1}`
-        newEnquiry.userID=req.params.id
-        newEnquiry.save((err, savedEnquiry) => {
-         if(err){
-          return res.json({ error: err })
+      Enquiry.countDocuments({}, function (err, count) {
+        console.log("Total Number of Enquiries:", count);
 
-        }
-        //res.json(savedEnquiry);
+        newEnquiry.enquiryID = `Enq000${count + 1}`
+        newEnquiry.userID = req.params.id
+        newEnquiry.save((err, savedEnquiry) => {
+          if (err) {
+            return res.json({ error: err })
+
+          }
+          //res.json(savedEnquiry);
 
           callback(null, savedEnquiry);
 
         });
 
-    })},
+      })
+    },
     function (callback) {
       User.findById(req.params.id, (error, foundUser) => {
         foundUser.enquiries.push(newEnquiry);
         foundUser.save((err, savedUser) => {
           console.log(savedUser)
-          if(err){
+          if (err) {
             return res.json({ error: err })
 
           }
-         // res.json(savedUser);
-          callback(null, savedUser );
+          // res.json(savedUser);
+          callback(null, savedUser);
 
         });
       });
@@ -114,14 +115,14 @@ router.post('/:id/enquiries', (req, res) => {
     function (err, results) {
       res.json({ 'results': results })
       //your final callback here.
-  });
-  
-  
+    });
+
+
 
 
 
 }) //end of get enquiries count
- //end of post 
+//end of post 
 
 //})
 
@@ -132,63 +133,64 @@ router.post('/:id/enquiries', (req, res) => {
 
 router.post('/:id/requests', (req, res) => {
   const newRequest = new Request(req.body);
-  console.log('new request is '+newRequest)
+  console.log('new request is ' + newRequest)
   const newAddress = new Address(req.body);
-  console.log("new address is "+newAddress)
+  console.log("new address is " + newAddress)
 
 
-var count;
+  var count;
 
-async.parallel([
-  function (callback) {
-    newAddress.save((err, savedAddress) => {
-       if(err){
-        return res.json({ error: err })
+  async.parallel([
+    function (callback) {
+      newAddress.save((err, savedAddress) => {
+        if (err) {
+          return res.json({ error: err })
 
-      }
+        }
 
 
-      //res.json(savedEnquiry);
+        //res.json(savedEnquiry);
 
         callback(null, savedAddress);
 
       });
 
- },
-function (callback) {
-  Request.countDocuments({}, function( err, count){
-    console.log( "Total Number of Requests:", count );
-
-    newRequest.requestID=`Req00${count+1}`
-    newRequest.userID=req.params.id
-    newRequest.address=newAddress
-
-    newRequest.save((err, savedRequest) => {
-     if(err){
-      return res.json({ error: err })
-
-    }
-    //res.json(savedEnquiry);
-
-      callback(null, savedRequest);
-
-    });
-
-})},
-
-    
+    },
     function (callback) {
-      User.findById(req.params.id, (error, foundUser) => {
-        foundUser.hasActiveRequests=true
-        foundUser.requests.push(newRequest);
-        foundUser.address=newAddress
-        foundUser.save((err, savedUser) => {
-          if(err){
+      Request.countDocuments({}, function (err, count) {
+        console.log("Total Number of Requests:", count);
+
+        newRequest.requestID = `Req00${count + 1}`
+        newRequest.userID = req.params.id
+        newRequest.address = newAddress
+
+        newRequest.save((err, savedRequest) => {
+          if (err) {
             return res.json({ error: err })
 
           }
-         // res.json(savedUser);
-          callback(null, savedUser );
+          //res.json(savedEnquiry);
+
+          callback(null, savedRequest);
+
+        });
+
+      })
+    },
+
+
+    function (callback) {
+      User.findById(req.params.id, (error, foundUser) => {
+        foundUser.hasActiveRequests = true
+        foundUser.requests.push(newRequest);
+        foundUser.address = newAddress
+        foundUser.save((err, savedUser) => {
+          if (err) {
+            return res.json({ error: err })
+
+          }
+          // res.json(savedUser);
+          callback(null, savedUser);
 
         });
       });
@@ -198,14 +200,14 @@ function (callback) {
     function (err, results) {
       res.json({ 'results': results })
       //your final callback here.
-  });
-  
-  
+    });
+
+
 
 
 
 }) //end of get enquiries count
- //end of post 
+//end of post 
 
 //-----------------------------------------------------------------------------------------------
 
@@ -215,7 +217,7 @@ function (callback) {
 
 // router.post('/:id/requests', (req, res) => {
 //   const newRequest = new Request(req.body);
-  
+
 //   Request.countDocuments({}, function( err, count){
 //     console.log( "Total Number of Requests:", count );
 
@@ -226,7 +228,7 @@ function (callback) {
 //       res.json(savedRequest);
 //     });
 
-  
+
 
 //     User.findById(req.params.id, (error, foundUser) => {
 //       foundUser.hasActiveRequests=true
@@ -252,7 +254,7 @@ router.get('/:id/enquiries', (req, res) => {
         return console.log(err);
       }
 
-      res.json(borrower.enquiries) 
+      res.json(borrower.enquiries)
 
     })
 
@@ -262,54 +264,37 @@ router.get('/:id/enquiries', (req, res) => {
 router.get('/:id/requests', (req, res) => {
 
   User.findById(req.params.id)
-    .populate({path:'requests', model:'Request',
-    populate:[{path:'address', model:'Address'},
-    {path:'book', model:'Book'}]
-  })
+    .populate({
+      path: 'requests', model: 'Request',
+      populate: [{ path: 'address', model: 'Address' },
+      { path: 'book', model: 'Book' }]
+    })
 
-   // .populate('requests').populate('book') //old one
-
-  //   {
-  //     path: 'pages.page.components'
-  //  }
     .exec((err, borrower) => {
       if (err) {
         return console.log(err);
       }
 
-      res.json(borrower.requests) 
+      res.json(borrower.requests)
 
     })
 
 })
 
 
-// Car
-//   .find()
-//   .populate({
-//     path: 'partIds',
-//     model: 'Part',
-//     populate: {
-//       path: 'otherIds',
-//       model: 'Other'
-//     }
-//   })
+
+router.get('/getByID/:id', (req, res) => {
+  Borrower.findOne({ userID: req.params.id })
+    .populate('enquiries', 'requests')
+    .exec((err, borrower) => {
+      if (err) {
+        return console.log(err)
+      }
+
+      { res.json(borrower) }
 
 
-
-
-router.get('/getByID/:id',(req,res)=>{
-  Borrower.findOne({userID:req.params.id})
-  .populate('enquiries','requests')
-  .exec((err, borrower)=>{
-    if(err){
-      return console.log(err)
-    }
-
-    { res.json(borrower)}
-
-
-  })
+    })
 })
 
 
@@ -359,30 +344,30 @@ router.post('/:id/address', (req, res) => {
   async.parallel([
     function (callback) {
       newAddress.save((err, savedAddress) => {
-         if(err){
+        if (err) {
           return res.json({ error: err })
 
         }
 
         //res.json(savedEnquiry);
 
-          callback(null, savedAddress);
+        callback(null, savedAddress);
 
-        });
+      });
 
-   },
+    },
     function (callback) {
       User.findById(req.params.id, (error, foundUser) => {
-        foundUser.address=newAddress
-        foundUser.hasAddress=true
+        foundUser.address = newAddress
+        foundUser.hasAddress = true
         foundUser.save((err, savedUser) => {
           console.log(savedUser)
-          if(err){
+          if (err) {
             return res.json({ error: err })
 
           }
-         // res.json(savedUser);
-          callback(null, savedUser );
+          // res.json(savedUser);
+          callback(null, savedUser);
 
         });
       });
@@ -392,8 +377,8 @@ router.post('/:id/address', (req, res) => {
     function (err, results) {
       res.json({ 'results': results })
       //your final callback here.
-  });
-  
+    });
+
 
 })
 module.exports = router;

@@ -3,8 +3,8 @@ const express = require('express')
 const router = express.Router()
 
 const Enquiry = require('../../models/enquiry')
-const auth=require('../../middleware/auth')
-const admin=require('../../middleware/admin')
+const auth = require('../../middleware/auth')
+const admin = require('../../middleware/admin')
 
 // @route GET api/enquiries
 // @desc GET all enquiries
@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {
     Enquiry.findById(req.params.id)
         .then(foundEnquiry => {
-        foundEnquiry.status = 'answered'
+            foundEnquiry.status = 'answered'
             foundEnquiry.response_date = Date.now()
             foundEnquiry.response = req.body.response
             foundEnquiry.save(((err, savedEnquiry) => {
@@ -47,9 +47,9 @@ router.patch('/:id', (req, res) => {
         .catch(error => res.json({ message: error }))
 })
 
-    // Enquiry.count({}, function( err, count){
-    //     console.log( "Total Number of Enquiries:", count );
-    // })
+// Enquiry.count({}, function( err, count){
+//     console.log( "Total Number of Enquiries:", count );
+// })
 
 
 
